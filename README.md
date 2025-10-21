@@ -1,1 +1,1 @@
-# BrainBattle
+# QuizVerse
