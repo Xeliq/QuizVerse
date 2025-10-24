@@ -1,0 +1,61 @@
+services:
+  app:
+    build:
+      context: ./backend
+    container_name: laravel-app
+    volumes:
+      - ./backend:/var/www/html
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - quizverse
+
+  frontend:
+    build:
+      context: ./frontend/QuizeVerse
+      dockerfile: ../Dockerfile
+    container_name: vue-app
+    volumes:
+      - ./frontend/QuizeVerse:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    command: npm run dev -- --host
+    networks:
+      - quizverse
+
+  db:
+    image: postgres:16
+    container_name: pg-db
+    restart: always
+    environment:
+      POSTGRES_DB: quizverse
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - quizverse
+      
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@quizverse.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    networks:
+      - quizverse
+
+networks:
+  quizverse:
+
+volumes:
+  pgdata:
