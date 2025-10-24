@@ -6,7 +6,7 @@ QuizVerse to pełnoprawna aplikacja webowa do tworzenia i rozwiązywania quizów
 ## 🧰 Stack technologiczny
 
 - **Frontend:** Vue 3 + Vite
-- **Backend:** Laravel 10
+- **Backend:** Laravel 12
 - **Baza danych:** PostgreSQL 16
 - **GUI do bazy:** pgAdmin 4
 - **Konteneryzacja:** Docker + Docker Compose
