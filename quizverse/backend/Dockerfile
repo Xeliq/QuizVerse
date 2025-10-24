@@ -6,9 +6,11 @@ RUN apt-get update && apt-get install -y \
     git curl zip unzip libpq-dev libonig-dev libxml2-dev \
     && docker-php-ext-install pdo pdo_mysql
 
-COPY composer.json composer.lock ./
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install --optimize-autoloader --no-dev
+
+COPY composer.json composer.lock ./
+
+RUN composer install --no-dev --optimize-autoloader
 
 COPY . .
 
