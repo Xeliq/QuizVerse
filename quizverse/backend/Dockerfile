@@ -14,4 +14,4 @@ RUN composer install --no-dev --optimize-autoloader --no-scripts
 
 EXPOSE 8000
 
-ENTRYPOINT ["sh", "-c", "composer install --no-dev --optimize-autoloader && php artisan package:discover && php artisan serve --host=0.0.0.0 --port=8000"]
+ENTRYPOINT ["sh", "/var/www/html/docker-entrypoint.sh"]
