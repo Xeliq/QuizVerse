@@ -3,7 +3,6 @@
 ### 1. Klonowanie repozytorium
 
 ```bash
-git clone https://github.com/Xeliq/quizverse.git
 cd quizverse
 ```
 
@@ -46,10 +45,16 @@ pgAdmin	- http://localhost:5050 - GUI do PostgreSQL
 ### Logowanie do pgAdmin
 
 Email: admin@example.com
+
 Hasło: admin
 
+
 Dodaj nowy serwer:
+
 Host: db
+
 Port: 5432
+
 User: postgres
+
 Hasło: postgres
