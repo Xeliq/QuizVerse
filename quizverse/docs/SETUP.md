@@ -28,17 +28,6 @@ DB_PASSWORD=postgres
 SESSION_DRIVER=database
 ```
 
-Frontend (frontend/QuizeVerse)
-Nie wymaga .env, ale możesz dodać proxy w vite.config.ts:
-
-```bash
-server: {
-  proxy: {
-    '/api': 'http://localhost:8000'
-  }
-}
-```
-
 ### 3. Uruchomienie kontenerów
 
 ```bash
@@ -48,7 +37,9 @@ docker-compose up --build
 ### Dostępne usługi
 
 Frontend - http://localhost:5173 - Aplikacja Vue
+
 Backend	- http://localhost:8000 - API Laravel + sesje
+
 pgAdmin	- http://localhost:5050 - GUI do PostgreSQL
 
 
@@ -62,12 +53,3 @@ Host: db
 Port: 5432
 User: postgres
 Hasło: postgres
-
-### Migracje i seedy
-
-Po uruchomieniu kontenerów:
-
-```bash
-docker exec -it laravel-app php artisan migrate
-docker exec -it laravel-app php artisan db:seed
-```
