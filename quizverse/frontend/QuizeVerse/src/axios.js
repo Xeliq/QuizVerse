@@ -16,4 +16,14 @@ api.interceptors.request.use((config) => {
   return config
 })
 
+export const logout = async () => {
+  const token = localStorage.getItem('token')
+  return await api.post('/logout', {}, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+}
+
+
 export default api

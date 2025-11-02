@@ -2,22 +2,35 @@
   <div>
     <h1>Witaj, {{ user.name }}</h1>
     <p>Email: {{ user.email }}</p>
+    <button @click="handleLogout">Wyloguj</button>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import api from '../axios'
+import api, { logout } from '../axios'
 
 const user = ref({})
 
 onMounted(async () => {
-  try {
-    const response = await api.get('/user')
-    user.value = response.data
-  } catch (e) {
-    console.error('Błąd przy pobieraniu użytkownika:', e)
-  }
+  const token = localStorage.getItem('token')
+  const response = await api.get('/user', {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+  user.value = response.data
 })
+
+const handleLogout = async () => {
+  try {
+    await logout()
+  } catch (error) {
+    console.error('Logout error:', error)
+  } finally {
+    localStorage.removeItem('token')
+    window.location.href = '/login'
+  }
+}
 </script>
 

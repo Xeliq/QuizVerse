@@ -5,7 +5,7 @@
         Register for <span class="quizverse-text">QuizVerse</span>
       </h1>
 
-      <form class="login-form">
+      <form class="login-form" @submit.prevent="register">
         <label for="username">Username</label>
         <input type="text" id="username" v-model="username" placeholder="Enter your username" />
 
@@ -15,7 +15,12 @@
         <label for="password">Password</label>
         <input type="password" id="password" v-model="password" placeholder="Enter your password" />
 
+        <label for="password_confirmation">Confirm Password</label>
+        <input type="password" id="password_confirmation" v-model="passwordConfirmation" placeholder="Confirm your password" />
+
         <button type="submit" class="login-button">Register</button>
+
+        <p v-if="error" class="error-message">{{ error }}</p>
 
         <div class="login-options">
           <label class="remember-me">
@@ -32,12 +37,40 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import '../assets/login.css'  // reuse login styles
+import api from '../axios'
+import '../assets/login.css'
 
 const username = ref('')
 const email = ref('')
 const password = ref('')
+const passwordConfirmation = ref('')
 const agreeTerms = ref(false)
+const error = ref(null)
+
+const register = async () => {
+  error.value = null
+
+  if (!agreeTerms.value) {
+    error.value = 'You must agree to the terms.'
+    return
+  }
+
+  try {
+    const response = await api.post('/register', {
+      name: username.value,
+      email: email.value,
+      password: password.value,
+      password_confirmation: passwordConfirmation.value
+    })
+
+    const token = response.data.access_token
+    localStorage.setItem('token', token)
+
+    window.location.href = '/dashboard'
+  } catch (e) {
+    error.value = e.response?.data?.message || 'Registration failed.'
+  }
+}
 
 onMounted(() => {
   const app = document.getElementById('app')
