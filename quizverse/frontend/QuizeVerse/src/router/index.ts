@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue' 
 import RegisterView from '../views/Register.vue'
+import DashboardView from '../views/DashboardView.vue'
 
 
 const router = createRouter({
@@ -30,7 +31,25 @@ const router = createRouter({
       name: 'Register',
       component: RegisterView,
     },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: DashboardView,
+      meta: { requiresAuth: true }
+    },
   ],
 })
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token')
+  const requiresAuth = to.meta.requiresAuth
+
+  if (requiresAuth && !token) {
+    next('/login')
+  } else {
+    next()
+  }
+})
+
 
 export default router
