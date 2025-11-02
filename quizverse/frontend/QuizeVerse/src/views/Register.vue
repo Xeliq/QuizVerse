@@ -2,7 +2,7 @@
   <div class="login-page">
     <div class="login-box">
       <h1 class="login-title">
-        Sign Up to <span class="quizverse-text">QuizVerse</span>
+        Register for <span class="quizverse-text">QuizVerse</span>
       </h1>
 
       <form class="login-form">
@@ -15,7 +15,7 @@
         <label for="password">Password</label>
         <input type="password" id="password" v-model="password" placeholder="Enter your password" />
 
-        <button type="submit" class="login-button">Sign Up</button>
+        <button type="submit" class="login-button">Register</button>
 
         <div class="login-options">
           <label class="remember-me">
