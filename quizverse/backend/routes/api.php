@@ -5,6 +5,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Api\QuizController;
+use App\Http\Controllers\Api\QuestionController;
+use App\Http\Controllers\Api\AnswerController;
+use App\Http\Controllers\Api\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,3 +28,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', [RegisteredUserController::class, 'store']);
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth:sanctum');
+
+Route::middleware('auth:sanctum')->group(function () {
+    // quizy
+    Route::get('/quizzes', [QuizController::class, 'index']);
+    Route::post('/quizzes', [QuizController::class, 'store']);
+    Route::get('/quizzes/{id}', [QuizController::class, 'show']);
+    Route::delete('/quizzes/{id}', [QuizController::class, 'destroy']);
+
+    // pytania
+    Route::post('/quizzes/{quizId}/questions', [QuestionController::class, 'store']);
+
+    // odpowiedzi
+    Route::post('/questions/{questionId}/answers', [AnswerController::class, 'store']);
+
+    // pobieranie kategorii
+    Route::get('/categories', [CategoryController::class, 'index']);
+});
