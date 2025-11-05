@@ -32,16 +32,22 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->midd
 Route::middleware('auth:sanctum')->group(function () {
     // quizy
     Route::get('/quizzes', [QuizController::class, 'index']);
+    Route::get('/all/quizzes', [QuizController::class, 'showAll']);
     Route::post('/quizzes', [QuizController::class, 'store']);
+    Route::put('/quizzes/{quiz}', [QuizController::class, 'update']);
     Route::get('/quizzes/{id}', [QuizController::class, 'show']);
+    Route::get('/category/quizzes/{id}', [QuizController::class, 'cattegoryShowAll']);
     Route::delete('/quizzes/{id}', [QuizController::class, 'destroy']);
+    Route::delete('/quizzes/save-result', [QuizController::class, 'saveResult']);
 
     // pytania
     Route::post('/quizzes/{quizId}/questions', [QuestionController::class, 'store']);
 
     // odpowiedzi
     Route::post('/questions/{questionId}/answers', [AnswerController::class, 'store']);
+    Route::post('/questions/is-correct/{id}', [AnswerController::class, 'isCorrect']);
 
     // pobieranie kategorii
     Route::get('/categories', [CategoryController::class, 'index']);
+    Route::get('/categories/select', [CategoryController::class, 'selectAllForSelect']);
 });
