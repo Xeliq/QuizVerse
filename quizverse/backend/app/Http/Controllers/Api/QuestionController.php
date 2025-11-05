@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Question;
 use App\Models\Quiz;
+use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
@@ -20,7 +21,7 @@ class QuestionController extends Controller
         $quiz = Quiz::findOrFail($quizId);
 
         // sprawdzenie czy uzytkwnik nie jest właściccielem
-        if ($quiz->user_id !== auth()->id()) {
+        if ($quiz->user_id !== Auth::id()) {
             return response()->json(['error' => 'Unauthorized'], 403);
         }
 
