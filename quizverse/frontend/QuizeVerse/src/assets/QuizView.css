@@ -151,3 +151,16 @@ html, body {
   transform: translateY(0);
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
 }
+.selected {
+  background-color: #4caf50;
+  color: white;
+  border: 2px solid #388e3c;
+}
+.answer-btn:hover:not(.selected) {
+  background-color: #e0e0e0;
+}
+.selected {
+  background-color: #4caf50;
+  color: white;
+  border: 2px solid #388e3c;
+}

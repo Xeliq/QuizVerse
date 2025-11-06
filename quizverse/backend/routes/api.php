@@ -37,8 +37,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/quizzes/{quiz}', [QuizController::class, 'update']);
     Route::get('/quizzes/{id}', [QuizController::class, 'show']);
     Route::get('/category/quizzes/{id}', [QuizController::class, 'cattegoryShowAll']);
+    Route::post('/quizzes/save-result', [QuizController::class, 'saveResult']);
     Route::delete('/quizzes/{id}', [QuizController::class, 'destroy']);
-    Route::delete('/quizzes/save-result', [QuizController::class, 'saveResult']);
 
     // pytania
     Route::post('/quizzes/{quizId}/questions', [QuestionController::class, 'store']);

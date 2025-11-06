@@ -23,7 +23,7 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
     },
-        {
+    {
       path: '/login',
       name: 'login',
       component: LoginView,
@@ -34,17 +34,17 @@ const router = createRouter({
       component: RegisterView,
     },
     {
+      path: '/quiz/:id',
+      name: 'QuizView',
+      component: QuizView,
+    },
+    {
       path: '/dashboard',
       name: 'dashboard',
       component: DashboardView,
       meta: { requiresAuth: true }
     },
-      {
-      path: '/quiz',
-      name: 'QuizView',
-      component: QuizView,
-    },
-      {
+    {
       path: '/create-quiz',
       name: 'create-quiz',
       component: CreateQuizView,

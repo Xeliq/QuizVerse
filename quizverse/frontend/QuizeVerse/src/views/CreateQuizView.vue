@@ -5,19 +5,19 @@
         Create a <span class="quizverse-text">Quiz</span>
       </h1>
 
-      <form class="quiz-form">
+      <form class="quiz-form" @submit.prevent="submitQuiz" >
         <div class="form-scroll">
           <!-- Quiz Title -->
           <label for="title">Title:</label>
-          <input id="title" v-model="quiz.title" type="text" placeholder="Enter quiz title" />
+          <input id="title" v-model="quiz.title" name = "title" type="text" placeholder="Enter quiz title" />
 
           <!-- Description -->
           <label for="description">Description:</label>
-          <textarea id="description" v-model="quiz.description" placeholder="Enter quiz description"></textarea>
+          <textarea id="description" v-model="quiz.description" name="description" placeholder="Enter quiz description"></textarea>
 
           <!-- Category -->
           <label for="category">Category:</label>
-          <select id="category" v-model="quiz.category_id">
+          <select id="category" name="category_id" v-model="quiz.category_id">
             <option value="">Select Category</option>
             <option v-for="category in categories" :key="category.id" :value="category.id">
               {{ category.name }}
@@ -102,6 +102,9 @@
 <script setup>
 import '../assets/create-quiz.css'
 import { ref, onMounted } from 'vue'
+import api from '../axios'
+
+const token = localStorage.getItem('token')
 
 const quiz = ref({
   title: '',
@@ -110,43 +113,33 @@ const quiz = ref({
   questions: []
 })
 
-// Temporary categories (since backend not connected yet)
-const categories = ref([
-  { id: 1, name: 'Science' },
-  { id: 2, name: 'History' },
-  { id: 3, name: 'Math' }
-])
+const categories = ref([])
 
-// Add/Remove Question
-function addQuestion() {
-  quiz.value.questions.push({
-    text: '',
-    points: 1,
-    image_path: null,
-    answers: []
-  })
-}
+async function fetchCategories() {
+  try {
+    const response = await api.get('/categories/select', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    const data = response.data
 
-function removeQuestion(index) {
-  quiz.value.questions.splice(index, 1)
-}
-
-// Add Answer to a Question
-function addAnswer(questionIndex) {
-  quiz.value.questions[questionIndex].answers.push({
-    text: '',
-    is_correct: false,
-    image_path: null
-  })
-}
-
-// Handle File Upload (frontend only)
-function onFileChange(event, question) {
-  const file = event.target.files[0]
-  if (file) question.image_path = file.name
+    if (data.status === 'success') {
+      categories.value = Object.entries(data.categories).map(([id, name]) => ({
+        id: parseInt(id),
+        name
+      }))
+    } else {
+      console.error('Nie udało się pobrać kategorii:', data)
+    }
+  } catch (error) {
+    console.error('Błąd sieci przy pobieraniu kategorii:', error)
+  }
 }
 
 onMounted(() => {
+  fetchCategories()
+
   const app = document.getElementById('app')
   if (app) {
     app.style.display = 'flex'
@@ -156,4 +149,95 @@ onMounted(() => {
     app.style.width = '100vw'
   }
 })
+
+function addQuestion() {
+  quiz.value.questions.push({
+    text: '',
+    points: 1,
+    image: null,
+    answers: []
+  })
+}
+
+function removeQuestion(index) {
+  quiz.value.questions.splice(index, 1)
+}
+
+function addAnswer(questionIndex) {
+  quiz.value.questions[questionIndex].answers.push({
+    text: '',
+    is_correct: false,
+    image: null
+  })
+}
+
+function onFileChange(event, question) {
+  const file = event.target.files[0]
+  if (file) quiz.value.questions[questionIndex].image = file
+}
+
+async function submitQuiz(event) {
+  event.preventDefault()
+
+  // Walidacja podstawowa
+  if (!quiz.value.title || !quiz.value.category_id || quiz.value.questions.length === 0) {
+    alert('Uzupełnij tytuł, kategorię i przynajmniej jedno pytanie.')
+    return
+  }
+
+  const formData = new FormData()
+  formData.append('title', quiz.value.title)
+  formData.append('description', quiz.value.description)
+  formData.append('category_id', quiz.value.category_id)
+
+  quiz.value.questions.forEach((question, qIndex) => {
+    formData.append(`questions[${qIndex}][text]`, question.text)
+    formData.append(`questions[${qIndex}][points]`, question.points)
+
+    if (question.image instanceof File) {
+      formData.append(`questions[${qIndex}][image]`, question.image)
+    }
+
+    question.answers.forEach((answer, aIndex) => {
+      formData.append(`questions[${qIndex}][answers][${aIndex}][text]`, answer.text)
+      formData.append(`questions[${qIndex}][answers][${aIndex}][is_correct]`, answer.is_correct ? 'true' : 'false')
+
+      if (answer.image instanceof File) {
+        formData.append(`questions[${qIndex}][answers][${aIndex}][image]`, answer.image)
+      }
+    })
+  })
+
+  try {
+    const response = await api.post('/quizzes',formData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+    })
+
+    if (response.status !== 200 && response.status !== 201) {
+      const errorData = response.data
+      console.error('Błąd zapisu:', errorData)
+      alert(errorData.message || 'Nie udało się zapisać quizu.')
+      return
+    }
+
+    const result = response.data
+    console.log('Quiz zapisany:', result)
+    alert('Quiz zapisany pomyślnie!')
+
+    // Reset formularza
+    quiz.value = {
+      title: '',
+      description: '',
+      category_id: '',
+      questions: []
+    }
+  } catch (error) {
+    console.error('Błąd sieci:', error)
+    alert('Wystąpił błąd sieci.')
+  }
+}
 </script>
+
+
