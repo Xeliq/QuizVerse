@@ -1,0 +1,153 @@
+/* Reset and full-page setup */
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #6e7592; /* full background color */
+  overflow: hidden;
+
+}
+
+/* Full-page centered layout */
+.quiz-page {
+  position: fixed; /* or absolute if you prefer */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #6e7592;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.quiz-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header section (above the box) */
+.quiz-header {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #ffeb3b;
+}
+
+.quiz-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.quiz-meta {
+  font-size: 18px;
+  color: #fff7a1;
+}
+
+/* Quiz box — identical to Create Quiz box */
+.quiz-box {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 10px;
+  width: 700px; /* same width as create-quiz-box */
+  max-width: 95%;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top section inside quiz box */
+.quiz-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.quiz-top h2 {
+  font-size: 22px;
+  margin: 0;
+  color: #333;
+}
+
+/* Timer */
+.timer {
+  background-color: #f44336;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+/* Question text */
+.question-text {
+  font-size: 18px;
+  margin: 10px 0 25px;
+  color: #222;
+}
+
+/* Answer buttons */
+.answers {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.answer-btn {
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.answer-btn:hover {
+  background-color: #ddd;
+  transform: translateY(-1px);
+}
+
+/* Navigation buttons */
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.nav-btn {
+  display: inline-block;
+  background: linear-gradient(145deg, #2c2c2d, #3d3d3f);
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+  transition: all 0.25s ease-in-out;
+}
+
+.nav-btn:hover {
+  background: linear-gradient(145deg, #1f1f20, #2c2c2d);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+.nav-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+}
