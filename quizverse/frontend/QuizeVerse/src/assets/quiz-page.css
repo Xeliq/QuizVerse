@@ -1,0 +1,97 @@
+/* body quizu */
+.quiz-info {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  width: 1200px;
+  max-width: 95%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* nagłowek quizu */
+.quiz-info-header {
+  text-align: center;
+}
+
+.quiz-info-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.quiz-info-description {
+  font-size: 18px;
+}
+
+/* informacje */
+.quiz-info-meta {
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+/* obrazek quizu */
+.quiz-image img {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  display: block;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* autor quizu */
+.quiz-author {
+  font-size: 15px;
+  color: rgb(130, 231, 130);
+  text-align: center;
+  font-style: italic;
+}
+
+/* start quizu */
+.start-quiz-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+/* sekcja komentarzy */
+.quiz-comments {
+  margin-top: 30px;
+}
+
+.quiz-comments h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+/* pojedynczy komentarz */
+.comment {
+  background-color: #f5f5f5;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.stars {
+  color: gold;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.comment-text {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.comment-meta {
+  font-size: 14px;
+  color: #777;
+  text-align: right;
+}
+

@@ -5,6 +5,7 @@ import RegisterView from '../views/Register.vue'
 import QuizView from '../views/QuizView.vue'
 import DashboardView from '../views/DashboardView.vue'
 import CreateQuizView from '../views/CreateQuizView.vue'
+import QuizPageView from '../views/QuizPageView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,12 +33,6 @@ const router = createRouter({
       name: 'Register',
       component: RegisterView,
     },
-         {
-      path: '/quiz',
-      name: 'QuizView',
-      component: QuizView,
-    },
-    
     {
       path: '/dashboard',
       name: 'dashboard',
@@ -45,9 +40,22 @@ const router = createRouter({
       meta: { requiresAuth: true }
     },
       {
+      path: '/quiz',
+      name: 'QuizView',
+      component: QuizView,
+    },
+      {
       path: '/create-quiz',
       name: 'create-quiz',
       component: CreateQuizView,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/quiz-page',
+      // path: '/quiz-page/:id', //tutaj pozniej podmienie na to
+      name: 'quiz-page',
+      component: QuizPageView,
+      meta: { requiresAuth: true }
     },
   ],
 })
