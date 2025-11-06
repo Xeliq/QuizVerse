@@ -5,7 +5,7 @@
         Login to <span class="quizverse-text">QuizVerse</span>
       </h1>
 
-      <form class="login-form">
+      <form class="login-form" @submit.prevent="login">
         <label for="email">Email</label>
         <input type="email" id="email" v-model="email" placeholder="Enter your email" />
 
@@ -13,14 +13,12 @@
         <input type="password" id="password" v-model="password" placeholder="Enter your password" />
 
         <button type="submit" class="login-button">Login</button>
-
+        <p v-if="error" class="error-message">{{ error }}</p>
         <div class="login-options">
-<label class="remember-me">
-  <input type="checkbox" v-model="rememberMe" />
-  <span>Remember me?</span>
-</label>
-
-
+          <label class="remember-me">
+            <input type="checkbox" v-model="rememberMe" />
+            <span>Remember me?</span>
+          </label>
           <a href="#" class="forgot-password">Forgot password?</a>
         </div>
       </form>
@@ -30,14 +28,37 @@
 
 
 <script setup>
-import '../assets/login.css'   /* <-- import the external CSS */
+import '../assets/login.css'
 import { ref, onMounted } from 'vue'
+import api from '../axios'
 
 const email = ref('')
 const password = ref('')
 const rememberMe = ref(false)
+const error = ref(null)
 
-// Force the app root to full height and reset layout when this page mounts
+const login = async () => {
+  try {
+    const response = await api.post('/login', {
+    email: email.value,
+    password: password.value
+  })
+
+    const token = response.data.access_token
+    localStorage.setItem('token', token)
+
+    // przekierowanie po zalogowaniu
+    window.location.href = '/dashboard'
+  } catch (e) {
+    console.error('Login error:', e.response)
+    if (e.response?.status === 401) {
+      error.value = e.response.data.message || 'Nieprawidłowe dane logowania'
+    } else {
+      error.value = 'Wystąpił nieoczekiwany błąd'
+    }
+  }
+}
+
 onMounted(() => {
   const app = document.getElementById('app')
   if (app) {
@@ -52,4 +73,5 @@ onMounted(() => {
   }
 })
 </script>
+
 

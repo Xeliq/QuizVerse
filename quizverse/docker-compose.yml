@@ -17,15 +17,15 @@ services:
       context: ./frontend/QuizeVerse
       dockerfile: ../Dockerfile
     container_name: vue-app
+    working_dir: /app         # dodałem to bo miałem problem z axios.js, dzieki temu dziala
+    ports:
+      - "5173:5173"
     volumes:
       - ./frontend/QuizeVerse:/app
       - /app/node_modules
-    ports:
-      - "5173:5173"
     command: npm run dev -- --host
     networks:
       - quizverse
-
   db:
     image: postgres:16
     container_name: pg-db

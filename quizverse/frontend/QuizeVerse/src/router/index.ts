@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue' 
 import RegisterView from '../views/Register.vue'
 import QuizView from '../views/QuizView.vue'
+import DashboardView from '../views/DashboardView.vue'
+import CreateQuizView from '../views/CreateQuizView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,7 +38,30 @@ const router = createRouter({
       component: QuizView,
     },
     
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: DashboardView,
+      meta: { requiresAuth: true }
+    },
+      {
+      path: '/create-quiz',
+      name: 'create-quiz',
+      component: CreateQuizView,
+    },
   ],
 })
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token')
+  const requiresAuth = to.meta.requiresAuth
+
+  if (requiresAuth && !token) {
+    next('/login')
+  } else {
+    next()
+  }
+})
+
 
 export default router

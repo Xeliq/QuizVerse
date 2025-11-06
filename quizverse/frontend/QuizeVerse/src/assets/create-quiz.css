@@ -1,0 +1,208 @@
+/* Full viewport background */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Full-page centered layout */
+body {
+  background-color: #6e7592; /* same as login */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Quiz container */
+.create-quiz-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Quiz box */
+.create-quiz-box {
+  background-color: white;
+  padding: 40px;
+  border-radius: 10px;
+  width: 700px;
+  max-width: 95%;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Title */
+.create-quiz-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.quizverse-text {
+  color: #e5a304;
+}
+
+/* Scrollable area for questions */
+.form-scroll {
+  max-height: 60vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Inputs and textarea */
+.quiz-form label {
+  font-weight: 500;
+  margin-top: 12px;
+  margin-bottom: 6px;
+}
+
+.quiz-form input[type="text"],
+.quiz-form input[type="number"],
+.quiz-form textarea,
+.quiz-form select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  background-color: #fafafa;
+  transition: border 0.2s ease-in-out, background-color 0.2s;
+  box-sizing: border-box;
+}
+
+.quiz-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.quiz-form input:focus,
+.quiz-form textarea:focus,
+.quiz-form select:focus {
+  outline: none;
+  border-color: #888;
+  background-color: #fff;
+}
+
+/* Buttons */
+button {
+  display: inline-block;
+  background: linear-gradient(145deg, #2c2c2d, #3d3d3f);
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+  transition: all 0.25s ease-in-out;
+}
+
+button:hover {
+  background: linear-gradient(145deg, #1f1f20, #2c2c2d);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+}
+
+button:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Button row container */
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+/* Add / Remove buttons */
+.questions-section button,
+.answers-section button {
+  background: linear-gradient(145deg, #e5a304, #c68a00);
+  color: #fff;
+  font-weight: 600;
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.questions-section button:hover,
+.answers-section button:hover {
+  background: linear-gradient(145deg, #f6b703, #e5a304);
+  transform: translateY(-1px);
+}
+
+/* Remove Question button */
+.questions-section button[type="button"]:has(svg),
+.questions-section button:contains('🗑') {
+  background: linear-gradient(145deg, #d9534f, #b52b27);
+}
+
+.questions-section button:contains('🗑'):hover {
+  background: linear-gradient(145deg, #e74c3c, #c0392b);
+}
+
+/* Switch styling */
+.quiz-type {
+  display: flex;
+  gap: 30px;
+  margin-top: 5px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #4caf50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}

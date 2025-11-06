@@ -44,7 +44,7 @@ pgAdmin	- http://localhost:5050 - GUI do PostgreSQL
 
 ### Logowanie do pgAdmin
 
-Email: admin@example.com
+Email: admin@quizverse.com
 
 Hasło: admin
 
