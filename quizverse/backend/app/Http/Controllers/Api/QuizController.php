@@ -159,7 +159,7 @@ class QuizController extends Controller
     // szczegóły quizu
     public function show($id)
     {
-        $quiz = Quiz::with('questions.answers')->findOrFail($id);
+        $quiz = Quiz::with(['category', 'user', 'questions.answers'])->findOrFail($id);
         return response()->json($quiz);
     }
 

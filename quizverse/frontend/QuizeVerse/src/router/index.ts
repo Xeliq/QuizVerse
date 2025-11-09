@@ -51,8 +51,8 @@ const router = createRouter({
       meta: { requiresAuth: true }
     },
     {
-      path: '/quiz-page',
-      // path: '/quiz-page/:id', //tutaj pozniej podmienie na to
+      // path: '/quiz-page',
+      path: '/quiz-page/:id',
       name: 'quiz-page',
       component: QuizPageView,
       meta: { requiresAuth: true }
