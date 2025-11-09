@@ -39,7 +39,7 @@
         </div>
       </div>
 
-
+      <!-- Tutaj póżniej ogarniecie te komentarze -->
       <!-- <div class="quiz-comments" v-if="quiz.comments?.length">
         <h2>Comments: {{ quiz.comments.length }}</h2>
         <div class="comment" v-for="comment in quiz.comments" :key="comment.id">
