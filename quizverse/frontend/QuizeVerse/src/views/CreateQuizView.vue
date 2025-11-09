@@ -51,7 +51,7 @@
 
               <!-- Optional image -->
               <label>Image (optional):</label>
-              <input type="file" @change="onFileChange($event, question)" />
+              <input type="file" accept="image/*" @change="onFileChange($event, qIndex)" />
 
               <!-- Answers -->
               <div class="answers-section">
@@ -171,7 +171,7 @@ function addAnswer(questionIndex) {
   })
 }
 
-function onFileChange(event, question) {
+function onFileChange(event, questionIndex) {
   const file = event.target.files[0]
   if (file) quiz.value.questions[questionIndex].image = file
 }
@@ -208,10 +208,12 @@ async function submitQuiz(event) {
     })
   })
 
+  console.log("Question image:", formData)
   try {
     const response = await api.post('/quizzes',formData, {
       headers: {
-        Authorization: `Bearer ${token}`
+        'Content-Type': undefined,
+        'Authorization': `Bearer ${token}`
       },
     })
 
