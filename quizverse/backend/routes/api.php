@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\QuizController;
 use App\Http\Controllers\Api\QuestionController;
 use App\Http\Controllers\Api\AnswerController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\QuizResultsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,4 +51,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // pobieranie kategorii
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/categories/select', [CategoryController::class, 'selectAllForSelect']);
+
+    // results 
+    Route::get('/quiz-results', [QuizResultsController::class, 'index']);
 });

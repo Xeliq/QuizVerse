@@ -179,7 +179,7 @@ class QuizController extends Controller
         ]);
         $result = QuizResult::create([
             'quiz_id' => $validated['quiz_id'],
-            'score' => $validated['quiz_id'],
+            'score' => $validated['score'],
             'user_id' => Auth::id(),
         ]);
         return response()->json([
