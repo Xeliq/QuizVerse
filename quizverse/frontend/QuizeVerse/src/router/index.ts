@@ -6,6 +6,7 @@ import QuizView from '../views/QuizView.vue'
 import DashboardView from '../views/DashboardView.vue'
 import CreateQuizView from '../views/CreateQuizView.vue'
 import QuizPageView from '../views/QuizPageView.vue'
+import QuizResultsView from '../views/QuizResultsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -56,6 +57,11 @@ const router = createRouter({
       name: 'quiz-page',
       component: QuizPageView,
       meta: { requiresAuth: true }
+    },
+        {
+      path: '/quiz-results',
+      name: 'quiz-results',
+      component: QuizResultsView,
     },
   ],
 })
