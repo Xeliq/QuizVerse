@@ -17,6 +17,9 @@ cp backend/.env.example backend/.env
 Zawartość pliku .env:
 
 ```bash
+APP_URL=http://localhost:8000
+FRONTEND_URL=http://localhost:5173
+
 DB_CONNECTION=pgsql
 DB_HOST=db
 DB_PORT=5432
@@ -24,7 +27,7 @@ DB_DATABASE=quizverse
 DB_USERNAME=postgres
 DB_PASSWORD=postgres
 
-SESSION_DRIVER=database
+VITE_APP_NAME="${APP_NAME}"
 ```
 
 ### 3. Uruchomienie kontenerów
