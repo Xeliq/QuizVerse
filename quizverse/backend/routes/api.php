@@ -40,6 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/category/quizzes/{id}', [QuizController::class, 'cattegoryShowAll']);
     Route::post('/quizzes/save-result', [QuizController::class, 'saveResult']);
     Route::delete('/quizzes/{id}', [QuizController::class, 'destroy']);
+    Route::get('/get-ranking-data', [QuizController::class, 'getRankingsData']);
 
     // pytania
     Route::post('/quizzes/{quizId}/questions', [QuestionController::class, 'store']);

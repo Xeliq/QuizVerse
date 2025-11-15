@@ -8,6 +8,11 @@ use App\Models\Quiz;
 use App\Models\QuizResult;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Stmt\Foreach_;
+use App\Models\Answer;
+use App\Models\Category;
+use App\Models\User;
+use App\Models\Question;
+
 
 class QuizController extends Controller
 {
@@ -182,6 +187,66 @@ class QuizController extends Controller
             'score' => $validated['score'],
             'user_id' => Auth::id(),
         ]);
+        return response()->json([
+            'message' => 'Result created successfully',
+            'result' => $result
+        ], 201);
+    }
+
+    public function getRankingsData()
+    {
+        // Liczba quizów w każdej kategorii (do wykresu słupkowego)
+        $quizzesPerCategory = Category::withCount('quizzes')
+            ->get()
+            ->map(fn($cat) => [
+                'category' => $cat->name,
+                'count' => $cat->quizzes_count
+            ]);
+
+        // Średni wynik w quizach (do wykresu liniowego)
+        $avgScores = QuizResult::selectRaw('quiz_id, AVG(score) as avg_score')
+            ->groupBy('quiz_id')
+            ->with('quiz')
+            ->get()
+            ->map(fn($res) => [
+                'quiz' => $res->quiz->title,
+                'avg_score' => round($res->avg_score, 2)
+            ]);
+
+        // Top 5 użytkowników wg punktów
+        $topUsers = QuizResult::selectRaw('user_id, SUM(score) as total_score')
+            ->groupBy('user_id')
+            ->orderByDesc('total_score')
+            ->with('user')
+            ->limit(5)
+            ->get()
+            ->map(fn($res) => [
+                'user' => $res->user->name,
+                'score' => $res->total_score
+            ]);
+
+        // Liczba pytań w quizach
+        $questionsPerQuiz = Quiz::withCount('questions')
+            ->get()
+            ->map(fn($quiz) => [
+                'quiz' => $quiz->title,
+                'questions' => $quiz->questions_count
+            ]);
+
+        // Liczba poprawnych odpowiedzi vs błędnych
+        $answersStats = [
+            'correct' => Answer::where('is_correct', true)->count(),
+            'incorrect' => Answer::where('is_correct', false)->count(),
+        ];
+
+        $result = [
+            'quizzesPerCategory' => $quizzesPerCategory,
+            'avgScores' => $avgScores,
+            'topUsers' => $topUsers,
+            'questionsPerQuiz' => $questionsPerQuiz,
+            'answersStats' => $answersStats,
+        ];
+
         return response()->json([
             'message' => 'Result created successfully',
             'result' => $result
