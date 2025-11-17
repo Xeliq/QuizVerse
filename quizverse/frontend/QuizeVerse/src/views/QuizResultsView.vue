@@ -1,8 +1,8 @@
 <template>
-  <div class="results-page">
+  <div class="results-page" v-if="result">
     <div class="results-box">
       <h1 class="results-title">
-        Football Quiz Results
+        {{ result.quiz.title }} Results
       </h1>
 
       <div class="results-info">
@@ -17,30 +17,57 @@
       </div>
     </div>
   </div>
+
+  <div v-else>
+    <p>Loading result...</p>
+  </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import api from '../axios'
 import '../assets/QuizResults.css'
-const score = ref(25)
-const total = ref(50)
-const percentage = computed(() => ((score.value / total.value) * 100).toFixed(0))
-const time = ref('00:50')
 
-function tryAgain() { alert('Restarting quiz...') }
-function nextQuiz() { alert('Loading next quiz...') }
-function leaveFeedback() { alert('Redirecting to feedback form...') }
-function showAnswers() { alert('Showing answers...') }
+const route = useRoute()
+const router = useRouter()
+const resultId = route.params.id
+
+const result = ref(null)
+const score = ref(0)
+const total = ref(0)
+const percentage = computed(() => total.value ? ((score.value / total.value) * 100).toFixed(0) : 0)
+
+async function fetchResult() {
+  try {
+    const response = await api.get(`/quiz-results/${resultId}`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    })
+
+    result.value = response.data
+    score.value = result.value.score
+
+    // bezpieczne sprawdzenie, czy quiz i questions istnieją
+    total.value = result.value.quiz?.questions?.reduce((sum, q) => sum + q.points, 0) || 0
+  } catch (error) {
+    console.error('Błąd pobierania wyniku:', error)
+    alert('Nie udało się pobrać wyniku.')
+  }
+}
+
+function tryAgain() {
+  router.push(`/quiz/${result.value.quiz.id}`)
+}
+
+function nextQuiz() {
+  router.push('/quizzes')
+}
+
+function leaveFeedback() {
+  router.push(`/feedback/${resultId}`)
+}
 
 onMounted(() => {
-  const app = document.getElementById('app')
-  if (app) {
-    app.style.display = 'flex'
-    app.style.justifyContent = 'center'
-    app.style.alignItems = 'center'
-    app.style.height = '100vh'
-    app.style.width = '100vw'
-  }
+  fetchResult()
 })
 </script>
-
