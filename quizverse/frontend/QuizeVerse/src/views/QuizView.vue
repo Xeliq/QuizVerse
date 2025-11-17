@@ -55,9 +55,11 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import api from '../axios'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter} from 'vue-router'
 
 const route = useRoute()
+const router = useRouter()
+
 const quizId = route.params.id
 const quiz = ref(null)
 const currentIndex = ref(0)
@@ -123,10 +125,14 @@ async function submitResult() {
       }
     })
 
-    alert('Wynik zapisany! Zdobyłeś ' + score + ' punktów.')
-  } catch (error) {
+    const resultId = response.data.result.id;
+
+    router.push(`/quiz-result/${resultId}`)
+
+  }
+  catch (error) {
     console.error('Błąd zapisu wyniku:', error)
-    alert('Nie udało się zapisać wyniku.')
+    alert()
   }
 }
 </script>

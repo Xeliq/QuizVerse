@@ -55,4 +55,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // results 
     Route::get('/quiz-results', [QuizResultsController::class, 'index']);
+    Route::get('/quiz-results/{id}', [QuizResultsController::class, 'show']);
+
 });

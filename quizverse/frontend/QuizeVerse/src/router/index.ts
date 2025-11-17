@@ -60,8 +60,8 @@ const router = createRouter({
       meta: { requiresAuth: true }
     },
     {
-      path: '/quiz-results',
-      name: 'quiz-results',
+      path: '/quiz-result/:id',
+      name: 'quiz-result',
       component: QuizResultsView,
     },
     {
