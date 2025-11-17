@@ -14,13 +14,6 @@
 
         <button type="submit" class="login-button">Login</button>
         <p v-if="error" class="error-message">{{ error }}</p>
-        <div class="login-options">
-          <label class="remember-me">
-            <input type="checkbox" v-model="rememberMe" />
-            <span>Remember me?</span>
-          </label>
-          <a href="#" class="forgot-password">Forgot password?</a>
-        </div>
       </form>
     </div>
   </div>
