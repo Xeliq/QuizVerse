@@ -23,12 +23,19 @@
           class="quiz-card"
           @click="goTo(`/quiz-page/${quiz.id}`)"
         >
-          <h3>{{ quiz.title }}</h3>
-          <!-- <p>{{ quiz.description }}</p> -->
-          <p class="quiz-meta" v-if="quiz.category">Category: {{ quiz.category.name }}</p>
-          <!-- <p class="quiz-meta" v-if="quiz.plays">Played {{ quiz.plays }} times</p> -->
-          <p>Played x times</p>
-          <!-- trzeba będzie to potem ogarnąć z backendu -->
+          <div class="quiz-card-header">
+            <h3 class="quiz-title">{{ quiz.title }}</h3>
+          </div>
+
+          <div class="quiz-card-body">
+            <p class="quiz-description">{{ quiz.description }}</p>
+            <p class="quiz-meta" v-if="quiz.category">Category: {{ quiz.category.name }}</p>
+          </div>
+
+          <div class="quiz-card-footer">
+            <p class="quiz-meta">Played {{ quiz.plays ?? 'N/A' }} times</p>
+            <!-- trzeba będzie to potem ogarnąć z backendu -->
+          </div>
         </div>
       </div>
     </section>
