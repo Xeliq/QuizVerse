@@ -1,0 +1,66 @@
+.profile-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  color: #333;
+  background-color: #ffffff;
+}
+
+.profile-header {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #E5A000;
+}
+
+.profile-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.stat-box {
+  background: #f8f8f8;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+}
+
+.quiz-section {
+  margin-top: 40px;
+}
+
+.quiz-section h2 {
+  font-size: 1.6rem;
+  color: #6e7592;
+  margin-bottom: 15px;
+}
+
+.quiz-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quiz-item {
+  background: #6e7592;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.quiz-author {
+  font-style: italic;
+  color: #ddd;
+}

@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\QuestionController;
 use App\Http\Controllers\Api\AnswerController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\QuizResultsController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,4 +58,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/quiz-results', [QuizResultsController::class, 'index']);
     Route::get('/quiz-results/{id}', [QuizResultsController::class, 'show']);
 
+    // profile
+    Route::get('/profile', [ProfileController::class, 'show']);
 });

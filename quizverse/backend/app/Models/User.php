@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'points',
     ];
 
     /**
@@ -49,12 +50,27 @@ class User extends Authenticatable
 
     public function quizzes()
     {
-        return $this->hasMany(Quiz::class, 'author_id');
+        return $this->hasMany(Quiz::class, 'user_id');
     }
 
     public function statistics()
     {
         return $this->hasMany(Statystyka::class, 'user_id');
+    }
+
+    public function quizResults()
+    {
+        return $this->hasMany(QuizResult::class);
+    }
+
+    public function completedQuizzes()
+    {
+        return $this->belongsToMany(Quiz::class, 'quiz_results');
+    }
+
+    public function createdQuizzes()
+    {
+        return $this->hasMany(Quiz::class, 'user_id');
     }
 
 

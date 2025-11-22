@@ -180,13 +180,16 @@ class QuizController extends Controller
     public function saveResult(Request $request) {
         $validated = $request->validate([
             'quiz_id' => 'required|exists:quizzes,id',
-            'score' => 'required|string',
+            'score' => 'required|integer|min:0',
         ]);
         $result = QuizResult::create([
             'quiz_id' => $validated['quiz_id'],
             'score' => $validated['score'],
             'user_id' => Auth::id(),
         ]);
+        $user = Auth::user();
+        $user->points = $user->quizResults()->sum('score');
+        $user->save();
         return response()->json([
             'message' => 'Result created successfully',
             'result' => $result

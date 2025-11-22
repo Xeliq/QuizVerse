@@ -11,6 +11,7 @@ import RankingView from '../views/RankingView.vue'
 import PrivacyPolicy from '../views/PrivacyPolicy.vue'
 import ContactView from '@/views/ContactView.vue'
 import QuizzesView from '@/views/QuizzesView.vue'
+import ProfileView from '@/views/ProfileView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -87,6 +88,11 @@ const router = createRouter({
       name: 'contact',
       component: ContactView,
     },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: ProfileView,
+    },    
   ],
 })
 
