@@ -25,7 +25,7 @@
         <div class="login-options">
           <label class="remember-me">
             <input type="checkbox" v-model="agreeTerms" />
-            <span>I agree to the Terms</span>
+            <span>I agree to the <router-link to="/privacy">Terms</router-link></span>
           </label>
 
           <a href="/login" class="forgot-password">Already have an account?</a>
@@ -66,23 +66,9 @@ const register = async () => {
     const token = response.data.access_token
     localStorage.setItem('token', token)
 
-    window.location.href = '/dashboard'
+    window.location.href = '/'
   } catch (e) {
     error.value = e.response?.data?.message || 'Registration failed.'
   }
 }
-
-onMounted(() => {
-  const app = document.getElementById('app')
-  if (app) {
-    app.style.display = 'flex'
-    app.style.justifyContent = 'center'
-    app.style.alignItems = 'center'
-    app.style.height = '100vh'
-    app.style.width = '100vw'
-    app.style.maxWidth = '100%'
-    app.style.padding = '0'
-    app.style.gridTemplateColumns = 'none'
-  }
-})
 </script>

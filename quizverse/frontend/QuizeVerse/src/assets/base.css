@@ -63,7 +63,9 @@ strong {
 }
 
 body {
-  min-height: 100vh;
+  min-height: auto;
+  display: block;
+  overflow-y: auto;
   color: var(--color-text);
   background: var(--color-background);
   transition:

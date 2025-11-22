@@ -1,0 +1,83 @@
+.contact-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  background-color: #ffffff;
+}
+
+.contact-hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.contact-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #6e7592;
+}
+
+.contact-subtitle {
+  font-size: 1.2rem;
+  margin-top: 10px;
+  color: #555;
+}
+
+.section-title {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  color: #E5A000;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 40px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-weight: bold;
+  color: #444;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.form-group textarea {
+  height: 120px;
+  resize: none;
+}
+
+.btn-submit {
+  background: #E5A000;
+  color: white;
+  font-weight: bold;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.btn-submit:hover {
+  background: #6e7592;
+}
+
+.contact-info {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 1.1rem;
+}

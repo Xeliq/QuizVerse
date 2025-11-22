@@ -17,7 +17,7 @@
         <img :src="quiz.image_url" :alt="quiz.title" />
       </div>
       <div class="quiz-image" v-else>
-        <img src="@/assets/logo.svg" alt="Default quiz image" />
+        <img src="@/assets/logo.png" alt="Default quiz image" />
       </div>
 
       <div class="quiz-author">

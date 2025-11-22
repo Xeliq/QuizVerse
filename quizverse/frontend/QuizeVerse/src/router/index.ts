@@ -8,6 +8,9 @@ import CreateQuizView from '../views/CreateQuizView.vue'
 import QuizPageView from '../views/QuizPageView.vue'
 import QuizResultsView from '../views/QuizResultsView.vue'
 import RankingView from '../views/RankingView.vue'
+import PrivacyPolicy from '../views/PrivacyPolicy.vue'
+import ContactView from '@/views/ContactView.vue'
+import QuizzesView from '@/views/QuizzesView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -65,9 +68,24 @@ const router = createRouter({
       component: QuizResultsView,
     },
     {
+      path: '/quizzes',
+      name: 'quizzes',
+      component: QuizzesView,
+    },    
+    {
       path: '/ranking',
       name: 'ranking',
       component: RankingView,
+    },
+    {
+      path: '/privacy',
+      name: 'privacy',
+      component: PrivacyPolicy,
+    },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: ContactView,
     },
   ],
 })

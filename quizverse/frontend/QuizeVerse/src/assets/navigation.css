@@ -1,0 +1,93 @@
+.navbar {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 28px;
+  background: #6e7592;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.logo {
+  height: 48px;
+  margin-right: 10px;
+}
+
+.brand-name {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.nav-links {
+  display: flex;
+  gap: 22px;
+}
+
+.nav-item {
+  color: white;
+  font-size: 1.2rem;
+  text-decoration: none;
+  transition: 0.25s;
+}
+
+.nav-item:hover {
+  color: #E5A000;
+}
+
+.nav-auth {
+  display: flex;
+  gap: 14px;
+}
+
+.auth-btn {
+  padding: 8px 18px;
+  border-radius: 5px;
+  font-size: 1.05rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: 0.25s;
+}
+
+.login-btn,
+.profile-btn {
+  background: white;
+  color: #6e7592;
+}
+
+.login-btn:hover,
+.profile-btn:hover {
+  background: #E5A000;
+  color: white;
+}
+
+.register-btn {
+  background: #E5A000;
+  color: white;
+}
+
+.register-btn:hover {
+  transform: scale(1.05);
+}
+
+.logout-btn {
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+}
+
+.logout-btn:hover {
+  background: #E5A000;
+  border-color: #E5A000;
+  color: white;
+}

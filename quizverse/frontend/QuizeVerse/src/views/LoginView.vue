@@ -41,7 +41,7 @@ const login = async () => {
     localStorage.setItem('token', token)
 
     // przekierowanie po zalogowaniu
-    window.location.href = '/dashboard'
+    window.location.href = '/'
   } catch (e) {
     console.error('Login error:', e.response)
     if (e.response?.status === 401) {
@@ -51,20 +51,6 @@ const login = async () => {
     }
   }
 }
-
-onMounted(() => {
-  const app = document.getElementById('app')
-  if (app) {
-    app.style.display = 'flex'
-    app.style.justifyContent = 'center'
-    app.style.alignItems = 'center'
-    app.style.height = '100vh'
-    app.style.width = '100vw'
-    app.style.maxWidth = '100%'
-    app.style.padding = '0'
-    app.style.gridTemplateColumns = 'none'
-  }
-})
 </script>
 
 

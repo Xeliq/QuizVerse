@@ -1,0 +1,147 @@
+.home-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* HERO SECTION */
+.hero-section {
+  width: 100%;
+  padding: 80px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #6e7592, #ffffff);
+  color: white;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.hero-subtitle {
+  margin-top: 10px;
+  font-size: 1.3rem;
+}
+
+.hero-buttons {
+  margin-top: 30px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 12px 28px;
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: 0.25s;
+}
+
+.btn-primary {
+  background: #E5A000;
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+}
+
+.btn-secondary {
+  background: white;
+  color: #6e7592;
+}
+
+.btn-secondary:hover {
+  transform: scale(1.05);
+}
+
+/* TRENDING SECTION */
+.trending-section {
+  width: 100%;
+  padding: 60px 20px;
+  text-align: center;
+  background: #ffffff;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 25px;
+  color: #6e7592;
+}
+
+.trending-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.quiz-card {
+  background: #6e7592;
+  color: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.25s;
+  width: 250px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.quiz-card:hover {
+  background: #E5A000;
+  transform: translateY(-5px);
+}
+
+/* WHY USE SECTION */
+.why-section {
+  width: 100%;
+  padding: 60px 20px;
+  background: #f8f8f8;
+  text-align: center;
+}
+
+.why-list {
+  font-size: 1.3rem;
+  margin-top: 15px;
+  list-style: none;
+  padding: 0;
+}
+
+/*HOW IT WORKS SECTION */
+.how-section {
+  width: 100%;
+  padding: 60px 20px;
+  background: #ffffff;
+  color: white;
+  text-align: center;
+}
+
+.how-steps {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.step {
+  background: #E5A000;
+  padding: 20px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* TOP USERS SECTION */
+.users-section {
+  width: 100%;
+  padding: 60px 20px;
+  background: #f8f8f8;
+  text-align: center;
+}

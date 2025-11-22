@@ -1,6 +1,5 @@
 .charts {
   grid-column: span 2;
-  max-height: 100vh;
   max-width: 100vw;
   overflow-y: auto;
   padding: 20px;
