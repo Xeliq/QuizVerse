@@ -33,8 +33,7 @@
           </div>
 
           <div class="quiz-card-footer">
-            <p class="quiz-meta">Played {{ quiz.plays ?? 'N/A' }} times</p>
-            <!-- trzeba będzie to potem ogarnąć z backendu -->
+            <p class="quiz-meta">Played {{ quiz.plays }} {{ quiz.plays === 1 ? 'time' : 'times' }}</p>
           </div>
         </div>
       </div>
@@ -104,7 +103,7 @@ onMounted(async () => {
       title: q.title,
       description: q.description,
       questionsCount: q.questions_count ?? (q.questions ? q.questions.length : undefined),
-      plays: q.results_count ?? (q.results ? q.results.length : undefined),
+      plays: q.results_count ?? 0, 
       category: q.category ?? null,
       raw: q,
     }))

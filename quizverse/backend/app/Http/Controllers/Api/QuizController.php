@@ -26,9 +26,14 @@ class QuizController extends Controller
     // lista wszystkich quizów
     public function showAll()
     {
-        $quizzes = Quiz::with('category')->get();
+        // Pobieramy wszystkie quizy z kategorią i liczba wyników (plays)
+        $quizzes = Quiz::with('category')
+            ->withCount('results') // <- tutaj dostajemy licznik wyników
+            ->get();
+
         return response()->json($quizzes);
     }
+
 
     // lista wszystkich quizów by cattegory
     public function cattegoryShowAll($id)
