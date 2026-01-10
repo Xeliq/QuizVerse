@@ -18,18 +18,20 @@
         <label for="password_confirmation">Confirm Password</label>
         <input type="password" id="password_confirmation" v-model="passwordConfirmation" placeholder="Confirm your password" />
 
+
+        <label class="remember-me">
+            <input type="checkbox" v-model="agreeTerms" />
+            <span>I agree to the <router-link class="inline-link"to="/privacy">Terms</router-link></span>
+        </label>
+
         <button type="submit" class="login-button">Register</button>
 
         <p v-if="error" class="error-message">{{ error }}</p>
 
-        <div class="login-options">
-          <label class="remember-me">
-            <input type="checkbox" v-model="agreeTerms" />
-            <span>I agree to the <router-link to="/privacy">Terms</router-link></span>
-          </label>
-
+        <div>
           <a href="/login" class="forgot-password">Already have an account?</a>
         </div>
+        
       </form>
     </div>
   </div>
