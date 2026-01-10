@@ -11,6 +11,16 @@ class Question extends Model
 
     protected $fillable = ['quiz_id', 'text', 'points', 'image_path'];
 
+    protected $appends = ['image_url'];
+
+    public function getImageUrlAttribute()
+    {
+        if ($this->image_path) {
+            return url('storage/' . $this->image_path);
+        }
+        return null;
+    }
+
     public function quiz()
     {
         return $this->belongsTo(Quiz::class);

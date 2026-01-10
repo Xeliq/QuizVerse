@@ -11,6 +11,16 @@ class Answer extends Model
 
     protected $fillable = ['question_id', 'text', 'is_correct', 'image_path'];
 
+    protected $appends = ['image_url'];
+
+    public function getImageUrlAttribute()
+    {
+        if ($this->image_path) {
+            return url('storage/' . $this->image_path);
+        }
+        return null;
+    }
+
     public function question()
     {
         return $this->belongsTo(Question::class);

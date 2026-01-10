@@ -76,6 +76,7 @@ class QuizController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
+            'image' => 'nullable|image|max:2048',
             'questions' => 'required|array|min:1',
             'questions.*.text' => 'required|string',
             'questions.*.points' => 'required|numeric',
@@ -86,11 +87,17 @@ class QuizController extends Controller
             'questions.*.answers.*.image' => 'nullable|image|max:2048',
         ]);
 
+        $quizImagePath = null;
+        if (!empty($validated['image']) && $validated['image'] instanceof \Illuminate\Http\UploadedFile) {
+            $quizImagePath = $validated['image']->store('quiz_images', 'public');
+        }
+
         $quiz = Quiz::create([
             'title' => $validated['title'],
             'description' => $validated['description'] ?? null,
             'category_id' => $validated['category_id'] ?? null,
             'user_id' => Auth::id(),
+            'image_path' => $quizImagePath,
         ]);
         foreach($validated['questions'] as $question) {
             $imagePath = null;
@@ -133,6 +140,7 @@ class QuizController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
+            'image' => 'nullable|image|max:2048',
             'questions' => 'required|array|min:1',
             'questions.*.text' => 'required|string',
             'questions.*.points' => 'required|numeric',
@@ -143,11 +151,17 @@ class QuizController extends Controller
             'questions.*.answers.*.image' => 'nullable|image|max:2048',
         ]);
 
+        $quizImagePath = $quiz->image_path;
+        if (!empty($validated['image']) && $validated['image'] instanceof \Illuminate\Http\UploadedFile) {
+            $quizImagePath = $validated['image']->store('quiz_images', 'public');
+        }
+
         // Aktualizacja quizu
         $quiz->update([
             'title' => $validated['title'],
             'description' => $validated['description'] ?? null,
             'category_id' => $validated['category_id'] ?? null,
+            'image_path' => $quizImagePath,
         ]);
 
         // Usunięcie starych pytań i odpowiedzi

@@ -9,7 +9,17 @@ class Quiz extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'category_id', 'title', 'description'];
+    protected $fillable = ['user_id', 'category_id', 'title', 'description', 'image_path'];
+
+    protected $appends = ['image_url'];
+
+    public function getImageUrlAttribute()
+    {
+        if ($this->image_path) {
+            return url('storage/' . $this->image_path);
+        }
+        return null;
+    }
 
     public function user()
     {

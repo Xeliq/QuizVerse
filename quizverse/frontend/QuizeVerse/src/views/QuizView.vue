@@ -15,10 +15,10 @@
 
         <p class="question-text" v-if="currentQuestion">
           {{ currentIndex + 1 }}. {{ currentQuestion.text }}
-          <br v-if="currentQuestion.image_path" >
+          <br v-if="currentQuestion.image_url" >
           <img 
-            v-if="currentQuestion.image_path" 
-            :src="`http://localhost:8000/storage/${currentQuestion.image_path}`" >
+            v-if="currentQuestion.image_url" 
+            :src="currentQuestion.image_url" >
         </p>
 
         <div class="answers" v-if="currentQuestion && currentQuestion.answers">

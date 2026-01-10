@@ -2,7 +2,7 @@
   <div class="create-quiz-page">
     <div class="create-quiz-box">
       <h1 class="create-quiz-title">
-        Create a <span class="quizverse-text">Quiz</span>
+        Create a <span>Quiz</span>
       </h1>
 
       <form class="quiz-form" @submit.prevent="submitQuiz" >
@@ -23,6 +23,13 @@
               {{ category.name }}
             </option>
           </select>
+
+          <!-- Quiz Image -->
+          <label for="quiz-image">Quiz Image (optional):</label>
+          <input id="quiz-image" type="file" accept="image/*" @change="onQuizImageChange" />
+          <div v-if="quiz.image" class="image-preview">
+            <img :src="quiz.imagePreview" alt="Quiz image preview" />
+          </div>
 
           <!-- Questions -->
           <div class="questions-section">
@@ -110,6 +117,8 @@ const quiz = ref({
   title: '',
   description: '',
   category_id: '',
+  image: null,
+  imagePreview: null,
   questions: []
 })
 
@@ -176,6 +185,18 @@ function onFileChange(event, questionIndex) {
   if (file) quiz.value.questions[questionIndex].image = file
 }
 
+function onQuizImageChange(event) {
+  const file = event.target.files[0]
+  if (file) {
+    quiz.value.image = file
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      quiz.value.imagePreview = e.target.result
+    }
+    reader.readAsDataURL(file)
+  }
+}
+
 async function submitQuiz(event) {
   event.preventDefault()
 
@@ -189,6 +210,10 @@ async function submitQuiz(event) {
   formData.append('title', quiz.value.title)
   formData.append('description', quiz.value.description)
   formData.append('category_id', quiz.value.category_id)
+
+  if (quiz.value.image instanceof File) {
+    formData.append('image', quiz.value.image)
+  }
 
   quiz.value.questions.forEach((question, qIndex) => {
     formData.append(`questions[${qIndex}][text]`, question.text)
@@ -233,6 +258,8 @@ async function submitQuiz(event) {
       title: '',
       description: '',
       category_id: '',
+      image: null,
+      imagePreview: null,
       questions: []
     }
   } catch (error) {
