@@ -45,9 +45,9 @@ const login = async () => {
   } catch (e) {
     console.error('Login error:', e.response)
     if (e.response?.status === 401) {
-      error.value = e.response.data.message || 'Nieprawidłowe dane logowania'
+      error.value = e.response.data.message || 'Invalid login data'
     } else {
-      error.value = 'Wystąpił nieoczekiwany błąd'
+      error.value = 'An unexpected error occurred'
     }
   }
 }

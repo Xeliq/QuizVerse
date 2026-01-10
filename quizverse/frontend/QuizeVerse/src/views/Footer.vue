@@ -6,7 +6,7 @@
       </div>
 
       <div class="footer-right">
-        <p class="footer-copy">© 2025 QuizVerse. All rights reserved.</p>
+        <p class="footer-copy">© 2026 QuizVerse. All rights reserved.</p>
         <router-link to="/privacy" class="footer-link">Privacy Policy</router-link>
       </div>
     </div>

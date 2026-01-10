@@ -130,10 +130,10 @@ async function fetchCategories() {
         name
       }))
     } else {
-      console.error('Nie udało się pobrać kategorii:', data)
+      console.error('Error fetching categories:', data)
     }
   } catch (error) {
-    console.error('Błąd sieci przy pobieraniu kategorii:', error)
+    console.error('Network error while fetching categories:', error)
   }
 }
 
@@ -181,7 +181,7 @@ async function submitQuiz(event) {
 
   // Walidacja podstawowa
   if (!quiz.value.title || !quiz.value.category_id || quiz.value.questions.length === 0) {
-    alert('Uzupełnij tytuł, kategorię i przynajmniej jedno pytanie.')
+    alert('Fill up title, category and at least one question.')
     return
   }
 
@@ -219,14 +219,14 @@ async function submitQuiz(event) {
 
     if (response.status !== 200 && response.status !== 201) {
       const errorData = response.data
-      console.error('Błąd zapisu:', errorData)
-      alert(errorData.message || 'Nie udało się zapisać quizu.')
+      console.error('Error saving:', errorData)
+      alert(errorData.message || 'Failed to save quiz.')
       return
     }
 
     const result = response.data
-    console.log('Quiz zapisany:', result)
-    alert('Quiz zapisany pomyślnie!')
+    console.log('Quiz saved:', result)
+    alert('Quiz saved successfully!')
 
     // Reset formularza
     quiz.value = {
@@ -236,8 +236,8 @@ async function submitQuiz(event) {
       questions: []
     }
   } catch (error) {
-    console.error('Błąd sieci:', error)
-    alert('Wystąpił błąd sieci.')
+    console.error('Network error:', error)
+    alert('An error occurred.')
   }
 }
 </script>

@@ -50,8 +50,8 @@ async function fetchResult() {
     // bezpieczne sprawdzenie, czy quiz i questions istnieją
     total.value = result.value.quiz?.questions?.reduce((sum, q) => sum + q.points, 0) || 0
   } catch (error) {
-    console.error('Błąd pobierania wyniku:', error)
-    alert('Nie udało się pobrać wyniku.')
+    console.error('Error fetching result:', error)
+    alert('Error fetching result.')
   }
 }
 

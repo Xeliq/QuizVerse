@@ -79,7 +79,7 @@ async function fetchQuiz() {
     })
     quiz.value = response.data
   } catch (error) {
-    console.error('Błąd pobierania quizu:', error)
+    console.error('Error downloading quiz:', error)
   }
 }
 
@@ -131,7 +131,7 @@ async function submitResult() {
 
   }
   catch (error) {
-    console.error('Błąd zapisu wyniku:', error)
+    console.error('Error saving result:', error)
     alert()
   }
 }
