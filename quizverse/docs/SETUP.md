@@ -14,7 +14,7 @@ Utwórz plik .env na podstawie przykładowego:
 ```bash
 cp backend/.env.example backend/.env
 ```
-Zawartość pliku .env:
+Zawartość do uzupełnienia w pliku .env:
 
 ```bash
 APP_URL=http://localhost:8000
