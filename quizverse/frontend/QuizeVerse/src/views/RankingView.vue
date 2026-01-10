@@ -1,27 +1,32 @@
 <template>
-  <div class="charts">
-    <h1>Statistics</h1>
-    <div class="charts-wrapper">
-      <h2>Average scores</h2>
-      <canvas id="lineChart"></canvas>
+  <div class="about-container">
+    <section class="about-hero">
+      <h1 class="about-title">Ranking</h1>
+      <div class="charts">
+        <div class="charts-wrapper">
+          <h2>Average scores</h2>
+          <canvas id="lineChart"></canvas>
 
-      <h2>Quizzes per category</h2>
-      <canvas id="barChart"></canvas>
+          <h2>Quizzes per category</h2>
+          <canvas id="barChart"></canvas>
 
-      <h2>Top users</h2>
-      <canvas id="usersChart"></canvas>
+          <h2>Top users</h2>
+          <canvas id="usersChart"></canvas>
 
-      <h2>Questions per quiz</h2>
-      <canvas id="questionsChart"></canvas>
+          <h2>Questions per quiz</h2>
+          <canvas id="questionsChart"></canvas>
 
-      <h2>Correct vs incorrect answers</h2>
-      <canvas id="pieChart"></canvas>
-    </div>
+          <h2>Correct vs incorrect answers</h2>
+          <canvas id="pieChart"></canvas>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
 import '../assets/ranking.css'
+import '../assets/about.css'
 import { onMounted } from "vue";
 import { Chart } from "chart.js/auto";
 import api from '../axios'
