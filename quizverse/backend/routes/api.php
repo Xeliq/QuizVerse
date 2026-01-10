@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\QuestionController;
 use App\Http\Controllers\Api\AnswerController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\QuizResultsController;
+use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\ProfileController;
 
 /*
@@ -57,6 +58,14 @@ Route::middleware('auth:sanctum')->group(function () {
     // results 
     Route::get('/quiz-results', [QuizResultsController::class, 'index']);
     Route::get('/quiz-results/{id}', [QuizResultsController::class, 'show']);
+
+    // komentarze - wszystkie endpointy
+    Route::get('/quizzes/{quizId}/comments', [CommentController::class, 'index']);
+    Route::post('/quizzes/{quizId}/comments', [CommentController::class, 'store']);
+    Route::get('/quizzes/{quizId}/comments/rating', [CommentController::class, 'getAverageRating']);
+    Route::get('/quizzes/{quizId}/comments/{commentId}', [CommentController::class, 'show']);
+    Route::put('/quizzes/{quizId}/comments/{commentId}', [CommentController::class, 'update']);
+    Route::delete('/quizzes/{quizId}/comments/{commentId}', [CommentController::class, 'destroy']);
 
     // profile
     Route::get('/profile', [ProfileController::class, 'show']);

@@ -1,0 +1,1477 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "QuizVerse API",
+        "description": "API dokumentacji dla aplikacji QuizVerse",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api"
+        }
+    ],
+    "paths": {
+        "/questions/is-correct/{id}": {
+            "post": {
+                "tags": [
+                    "Answers"
+                ],
+                "summary": "Sprawdź odpowiedź",
+                "description": "Sprawdza czy odpowiedź jest poprawna",
+                "operationId": "556e1a767b159f587ff8c41081da958b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID odpowiedzi",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Status odpowiedzi",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "answer_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "question_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "is_correct": {
+                                            "type": "boolean",
+                                            "example": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Odpowiedź nie znaleziona"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/questions/{questionId}/answers": {
+            "post": {
+                "tags": [
+                    "Answers"
+                ],
+                "summary": "Dodaj odpowiedź",
+                "description": "Dodaje nową odpowiedź do pytania (tylko dla właściciela quizu)",
+                "operationId": "8960a6a3e4ac45e90bb7fc102dee2003",
+                "parameters": [
+                    {
+                        "name": "questionId",
+                        "in": "path",
+                        "description": "ID pytania",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "text",
+                                    "is_correct"
+                                ],
+                                "properties": {
+                                    "text": {
+                                        "type": "string",
+                                        "example": "Warszawa"
+                                    },
+                                    "is_correct": {
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "image_path": {
+                                        "type": "string",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Odpowiedź została dodana",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Answer added successfully"
+                                        },
+                                        "answer": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "question_id": {
+                                                    "type": "integer"
+                                                },
+                                                "text": {
+                                                    "type": "string"
+                                                },
+                                                "is_correct": {
+                                                    "type": "boolean"
+                                                },
+                                                "image_path": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Brak uprawnień"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/all/quizzes": {
+            "get": {
+                "tags": [
+                    "Quizzes"
+                ],
+                "summary": "Lista wszystkich quizów",
+                "description": "Pobiera listę wszystkich quizów z kategorią i liczbą rozwiązań",
+                "operationId": "14c8d1e4705e6623e4a0782be7e4038a",
+                "responses": {
+                    "200": {
+                        "description": "Lista quizów",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "user_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "category_id": {
+                                                "type": "integer",
+                                                "example": 1,
+                                                "nullable": true
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Historia Polski"
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "nullable": true
+                                            },
+                                            "results_count": {
+                                                "type": "integer",
+                                                "example": 5
+                                            },
+                                            "created_at": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            },
+                                            "updated_at": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/quizzes": {
+            "get": {
+                "tags": [
+                    "Quizzes"
+                ],
+                "summary": "Lista moich quizów",
+                "description": "Pobiera listę quizów stworzonych przez zalogowanego użytkownika",
+                "operationId": "913ddca2579318569ae69b981303d158",
+                "responses": {
+                    "200": {
+                        "description": "Lista quizów",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "user_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "category_id": {
+                                                "type": "integer",
+                                                "example": 1,
+                                                "nullable": true
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "example": "Historia Polski"
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "nullable": true
+                                            },
+                                            "created_at": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            },
+                                            "updated_at": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Quizzes"
+                ],
+                "summary": "Utwórz nowy quiz",
+                "description": "Tworzy nowy quiz z pytaniami i odpowiedziami",
+                "operationId": "10eb80952019c2f3252e63bb83dc5cbc",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "questions"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Historia Polski"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "nullable": true
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "example": 1,
+                                        "nullable": true
+                                    },
+                                    "questions": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "text": {
+                                                    "type": "string",
+                                                    "example": "Kiedy został założony polski staat?"
+                                                },
+                                                "points": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "answers": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "text": {
+                                                                "type": "string",
+                                                                "example": "966"
+                                                            },
+                                                            "is_correct": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "minItems": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "minItems": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Quiz został utworzony",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Quiz created successfully"
+                                        },
+                                        "quiz": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "title": {
+                                                    "type": "string"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                },
+                                                "category_id": {
+                                                    "type": "integer",
+                                                    "nullable": true
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Błąd walidacji"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/quizzes/{quiz}": {
+            "put": {
+                "tags": [
+                    "Quizzes"
+                ],
+                "summary": "Zaktualizuj quiz",
+                "description": "Aktualizuje dane quizu",
+                "operationId": "4a1130b9f4915b3ba522d263ac75f16d",
+                "parameters": [
+                    {
+                        "name": "quiz",
+                        "in": "path",
+                        "description": "ID quizu",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Quiz zaktualizowany"
+                    },
+                    "403": {
+                        "description": "Brak uprawnień"
+                    },
+                    "404": {
+                        "description": "Quiz nie znaleziony"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/quizzes/{id}": {
+            "get": {
+                "tags": [
+                    "Quizzes"
+                ],
+                "summary": "Pobierz quiz z pytaniami",
+                "description": "Pobiera szczegóły quizu wraz z pytaniami i odpowiedziami",
+                "operationId": "4e039d137a904ecd502b3e5b6b6cbf82",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID quizu",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Szczegóły quizu"
+                    },
+                    "404": {
+                        "description": "Quiz nie znaleziony"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Quizzes"
+                ],
+                "summary": "Usuń quiz",
+                "description": "Usuwa quiz (tylko właściciel)",
+                "operationId": "d8d2c825eb5c1de157d945e585f7b3f6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID quizu",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Quiz usunięty"
+                    },
+                    "403": {
+                        "description": "Brak uprawnień"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/category/quizzes/{id}": {
+            "get": {
+                "tags": [
+                    "Quizzes"
+                ],
+                "summary": "Quizy z kategorii",
+                "description": "Pobiera wszystkie quizy z wybranej kategorii",
+                "operationId": "734648ec2ec2d74001fe01c8085918fc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID kategorii",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista quizów z kategorii"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/quizzes/save-result": {
+            "post": {
+                "tags": [
+                    "Quizzes"
+                ],
+                "summary": "Zapisz wynik quizu",
+                "description": "Zapisuje wynik rozwiązanego quizu",
+                "operationId": "effbdc2f1d74f0812812ae7ebd836bf0",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "quiz_id",
+                                    "points"
+                                ],
+                                "properties": {
+                                    "quiz_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "points": {
+                                        "type": "integer",
+                                        "example": 85
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Wynik został zapisany"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/get-ranking-data": {
+            "get": {
+                "tags": [
+                    "Quizzes"
+                ],
+                "summary": "Dane rankingowe",
+                "description": "Pobiera dane do rankingu użytkowników",
+                "operationId": "d866f5f3c3830eef2c11fe6d9478e8c7",
+                "responses": {
+                    "200": {
+                        "description": "Dane rankingowe"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/categories": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Lista kategorii",
+                "description": "Pobiera listę wszystkich kategorii",
+                "operationId": "b1b247b2b491b0491c3c728dc33f23f0",
+                "responses": {
+                    "200": {
+                        "description": "Lista kategorii",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "categories": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Historia"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/categories/select": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Kategorie dla selecta",
+                "description": "Pobiera kategorie w formacie id => name dla selectów",
+                "operationId": "d7ecc6fca854022002170c46e8b89d88",
+                "responses": {
+                    "200": {
+                        "description": "Kategorie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "categories": {
+                                            "type": "object",
+                                            "example": {
+                                                "1": "Historia",
+                                                "2": "Geografia"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/quizzes/{quizId}/comments": {
+            "get": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Lista wszystkich komentarzy do quizu",
+                "description": "Pobiera listę wszystkich komentarzy dla danego quizu, posortowanych od najnowszych",
+                "operationId": "948771c254662d4c5f5283a335266ad4",
+                "parameters": [
+                    {
+                        "name": "quizId",
+                        "in": "path",
+                        "description": "ID quizu",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista komentarzy",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "quiz_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "user_id": {
+                                                "type": "integer",
+                                                "example": 5,
+                                                "nullable": true
+                                            },
+                                            "user_name": {
+                                                "type": "string",
+                                                "example": "Jan Kowalski"
+                                            },
+                                            "content": {
+                                                "type": "string",
+                                                "example": "Świetny quiz!"
+                                            },
+                                            "rating": {
+                                                "type": "integer",
+                                                "example": 5
+                                            },
+                                            "created_at": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            },
+                                            "updated_at": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Quiz nie znaleziony"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Utwórz nowy komentarz",
+                "description": "Tworzy nowy komentarz do quizu. Uwierzytelniony użytkownik będzie przypisany do komentarza.",
+                "operationId": "d2612b6c06f74546dbc1a005ecdf9a0e",
+                "parameters": [
+                    {
+                        "name": "quizId",
+                        "in": "path",
+                        "description": "ID quizu",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "content",
+                                    "rating"
+                                ],
+                                "properties": {
+                                    "content": {
+                                        "type": "string",
+                                        "maxLength": 1000,
+                                        "minLength": 3,
+                                        "example": "Świetny quiz, polecam!"
+                                    },
+                                    "rating": {
+                                        "type": "integer",
+                                        "maximum": 5,
+                                        "minimum": 1,
+                                        "example": 5
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Komentarz został utworzony",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "quiz_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "user_id": {
+                                            "type": "integer",
+                                            "example": 5,
+                                            "nullable": true
+                                        },
+                                        "user_name": {
+                                            "type": "string",
+                                            "example": "Jan Kowalski"
+                                        },
+                                        "content": {
+                                            "type": "string",
+                                            "example": "Świetny quiz, polecam!"
+                                        },
+                                        "rating": {
+                                            "type": "integer",
+                                            "example": 5
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Walidacja nie powiodła się"
+                    },
+                    "404": {
+                        "description": "Quiz nie znaleziony"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/quizzes/{quizId}/comments/rating": {
+            "get": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Średnia ocena quizu",
+                "description": "Pobiera średnią ocenę i liczbę komentarzy dla danego quizu",
+                "operationId": "f1457a9186a42f9cbabe9ed74e44b000",
+                "parameters": [
+                    {
+                        "name": "quizId",
+                        "in": "path",
+                        "description": "ID quizu",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Średnia ocena i liczba komentarzy",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "quiz_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "average_rating": {
+                                            "type": "number",
+                                            "format": "float",
+                                            "example": 4.5
+                                        },
+                                        "total_comments": {
+                                            "type": "integer",
+                                            "example": 12
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Quiz nie znaleziony"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/quizzes/{quizId}/comments/{commentId}": {
+            "get": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Pobierz szczegóły komentarza",
+                "description": "Pobiera pełne informacje o konkretnym komentarzu",
+                "operationId": "a1fcdace298fa5b9549024515fb3db47",
+                "parameters": [
+                    {
+                        "name": "quizId",
+                        "in": "path",
+                        "description": "ID quizu",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "commentId",
+                        "in": "path",
+                        "description": "ID komentarza",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Szczegóły komentarza",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "quiz_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "user_id": {
+                                            "type": "integer",
+                                            "example": 5,
+                                            "nullable": true
+                                        },
+                                        "user_name": {
+                                            "type": "string",
+                                            "example": "Jan Kowalski"
+                                        },
+                                        "content": {
+                                            "type": "string",
+                                            "example": "Świetny quiz!"
+                                        },
+                                        "rating": {
+                                            "type": "integer",
+                                            "example": 5
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Komentarz lub quiz nie znaleziony"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Zaktualizuj komentarz",
+                "description": "Zaktualizuj treść lub ocenę komentarza. Tylko właściciel komentarza może go edytować.",
+                "operationId": "ded14350b5be30815f0c69102fce2e5c",
+                "parameters": [
+                    {
+                        "name": "quizId",
+                        "in": "path",
+                        "description": "ID quizu",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "commentId",
+                        "in": "path",
+                        "description": "ID komentarza",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "content": {
+                                        "type": "string",
+                                        "maxLength": 1000,
+                                        "minLength": 3,
+                                        "example": "Zaktualizowana treść"
+                                    },
+                                    "rating": {
+                                        "type": "integer",
+                                        "maximum": 5,
+                                        "minimum": 1,
+                                        "example": 4
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Komentarz został zaktualizowany",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "quiz_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "user_id": {
+                                            "type": "integer",
+                                            "example": 5,
+                                            "nullable": true
+                                        },
+                                        "user_name": {
+                                            "type": "string",
+                                            "example": "Jan Kowalski"
+                                        },
+                                        "content": {
+                                            "type": "string",
+                                            "example": "Zaktualizowana treść"
+                                        },
+                                        "rating": {
+                                            "type": "integer",
+                                            "example": 4
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Brak uprawnień do edycji tego komentarza"
+                    },
+                    "404": {
+                        "description": "Komentarz lub quiz nie znaleziony"
+                    },
+                    "422": {
+                        "description": "Walidacja nie powiodła się"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "Usuń komentarz",
+                "description": "Usuwa komentarz. Tylko właściciel komentarza może go usunąć.",
+                "operationId": "dbbdae952814b3ed768e4806aa26ee13",
+                "parameters": [
+                    {
+                        "name": "quizId",
+                        "in": "path",
+                        "description": "ID quizu",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "commentId",
+                        "in": "path",
+                        "description": "ID komentarza",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Komentarz został usunięty",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Komentarz został usunięty"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Brak uprawnień do usunięcia tego komentarza"
+                    },
+                    "404": {
+                        "description": "Komentarz lub quiz nie znaleziony"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/quizzes/{quizId}/questions": {
+            "post": {
+                "tags": [
+                    "Questions"
+                ],
+                "summary": "Dodaj pytanie",
+                "description": "Dodaje nowe pytanie do quizu (tylko dla właściciela quizu)",
+                "operationId": "6ee7bdafc7c83b085197048e652d34a9",
+                "parameters": [
+                    {
+                        "name": "quizId",
+                        "in": "path",
+                        "description": "ID quizu",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "text"
+                                ],
+                                "properties": {
+                                    "text": {
+                                        "type": "string",
+                                        "example": "Jaką jest stolica Polski?"
+                                    },
+                                    "points": {
+                                        "type": "integer",
+                                        "example": 10
+                                    },
+                                    "image_path": {
+                                        "type": "string",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Pytanie zostało dodane",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Question added successfully"
+                                        },
+                                        "question": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "quiz_id": {
+                                                    "type": "integer"
+                                                },
+                                                "text": {
+                                                    "type": "string"
+                                                },
+                                                "points": {
+                                                    "type": "integer"
+                                                },
+                                                "image_path": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Brak uprawnień"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/quiz-results": {
+            "get": {
+                "tags": [
+                    "Quiz Results"
+                ],
+                "summary": "Moje wyniki",
+                "description": "Pobiera listę wyników quizów zalogowanego użytkownika",
+                "operationId": "c51088cac3dd2f16b5d0fcff73eaca30",
+                "responses": {
+                    "200": {
+                        "description": "Lista wyników",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "user_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "quiz_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "points": {
+                                                "type": "integer",
+                                                "example": 85
+                                            },
+                                            "created_at": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/quiz-results/{id}": {
+            "get": {
+                "tags": [
+                    "Quiz Results"
+                ],
+                "summary": "Szczegóły wyniku",
+                "description": "Pobiera szczegóły wyniku quizu z pytaniami",
+                "operationId": "2d7deeb1ac777048f40a8da4b71cf1fa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID wyniku",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Szczegóły wyniku",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "user_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "quiz_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "points": {
+                                            "type": "integer",
+                                            "example": 85
+                                        },
+                                        "total": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Wynik nie znaleziony"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearer": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Answers",
+            "description": "Answers"
+        },
+        {
+            "name": "Quizzes",
+            "description": "Quizzes"
+        },
+        {
+            "name": "Categories",
+            "description": "Categories"
+        },
+        {
+            "name": "Comments",
+            "description": "Comments"
+        },
+        {
+            "name": "Questions",
+            "description": "Questions"
+        },
+        {
+            "name": "Quiz Results",
+            "description": "Quiz Results"
+        }
+    ]
+}

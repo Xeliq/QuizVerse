@@ -13,11 +13,38 @@ use App\Models\Category;
 use App\Models\User;
 use App\Models\Question;
 
-
 class QuizController extends Controller
 {
+    /**
+     * Lista quizów zalogowanego użytkownika
+     * 
+     * @OA\Get(
+     *     path="/quizzes",
+     *     tags={"Quizzes"},
+     *     summary="Lista moich quizów",
+     *     description="Pobiera listę quizów stworzonych przez zalogowanego użytkownika",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista quizów",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="user_id", type="integer", example=1),
+     *                 @OA\Property(property="category_id", type="integer", nullable=true, example=1),
+     *                 @OA\Property(property="title", type="string", example="Historia Polski"),
+     *                 @OA\Property(property="description", type="string", nullable=true),
+     *                 @OA\Property(property="created_at", type="string", format="date-time"),
+     *                 @OA\Property(property="updated_at", type="string", format="date-time")
+     *             )
+     *         )
+     *     ),
+     *     security={{"bearer": {}}}
+     * )
+     */
     // lista quizów użytkownika
     public function index()
+
     {
         $quizzes = Quiz::where('user_id', Auth::id())->with('category')->get();
         return response()->json($quizzes);

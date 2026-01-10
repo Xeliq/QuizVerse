@@ -10,6 +10,52 @@ use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
+    /**
+     * Dodaj pytanie do quizu
+     *
+     * @OA\Post(
+     *     path="/quizzes/{quizId}/questions",
+     *     tags={"Questions"},
+     *     summary="Dodaj pytanie",
+     *     description="Dodaje nowe pytanie do quizu (tylko dla właściciela quizu)",
+     *     @OA\Parameter(
+     *         name="quizId",
+     *         in="path",
+     *         required=true,
+     *         description="ID quizu",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"text"},
+     *             @OA\Property(property="text", type="string", example="Jaką jest stolica Polski?"),
+     *             @OA\Property(property="points", type="integer", example=10),
+     *             @OA\Property(property="image_path", type="string", nullable=true)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Pytanie zostało dodane",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Question added successfully"),
+     *             @OA\Property(
+     *                 property="question",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="quiz_id", type="integer"),
+     *                 @OA\Property(property="text", type="string"),
+     *                 @OA\Property(property="points", type="integer"),
+     *                 @OA\Property(property="image_path", type="string", nullable=true)
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Brak uprawnień"
+     *     ),
+     *     security={{"bearer": {}}}
+     * )
+     */
     public function store(Request $request, $quizId)
     {
         $validated = $request->validate([

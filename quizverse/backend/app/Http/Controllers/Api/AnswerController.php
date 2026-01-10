@@ -10,7 +10,38 @@ use Illuminate\Support\Facades\Auth;
 
 class AnswerController extends Controller
 {
-    /*czy odpowiedzi jest poprawna*/
+    /**
+     * Sprawdź czy odpowiedź jest poprawna
+     *
+     * @OA\Post(
+     *     path="/questions/is-correct/{id}",
+     *     tags={"Answers"},
+     *     summary="Sprawdź odpowiedź",
+     *     description="Sprawdza czy odpowiedź jest poprawna",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID odpowiedzi",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Status odpowiedzi",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="answer_id", type="integer", example=1),
+     *             @OA\Property(property="question_id", type="integer", example=1),
+     *             @OA\Property(property="is_correct", type="boolean", example=true)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Odpowiedź nie znaleziona"
+     *     ),
+     *     security={{"bearer": {}}}
+     * )
+     */
     public function isCorrect($id)
     {
         $answer = Answer::find($id);
@@ -30,6 +61,52 @@ class AnswerController extends Controller
         ]);
     }
 
+    /**
+     * Dodaj odpowiedź do pytania
+     *
+     * @OA\Post(
+     *     path="/questions/{questionId}/answers",
+     *     tags={"Answers"},
+     *     summary="Dodaj odpowiedź",
+     *     description="Dodaje nową odpowiedź do pytania (tylko dla właściciela quizu)",
+     *     @OA\Parameter(
+     *         name="questionId",
+     *         in="path",
+     *         required=true,
+     *         description="ID pytania",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"text","is_correct"},
+     *             @OA\Property(property="text", type="string", example="Warszawa"),
+     *             @OA\Property(property="is_correct", type="boolean", example=true),
+     *             @OA\Property(property="image_path", type="string", nullable=true)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Odpowiedź została dodana",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Answer added successfully"),
+     *             @OA\Property(
+     *                 property="answer",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="question_id", type="integer"),
+     *                 @OA\Property(property="text", type="string"),
+     *                 @OA\Property(property="is_correct", type="boolean"),
+     *                 @OA\Property(property="image_path", type="string", nullable=true)
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Brak uprawnień"
+     *     ),
+     *     security={{"bearer": {}}}
+     * )
+     */
     public function store(Request $request, $questionId)
     {
         $validated = $request->validate([
