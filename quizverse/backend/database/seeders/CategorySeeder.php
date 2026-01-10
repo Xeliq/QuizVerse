@@ -10,14 +10,14 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            ['name' => 'Ogólna wiedza'],
-            ['name' => 'Geografia'],
-            ['name' => 'Historia'],
-            ['name' => 'Nauka'],
-            ['name' => 'Sport'],
-            ['name' => 'Muzyka'],
-            ['name' => 'Filmy i seriale'],
-            ['name' => 'Zwierzęta'],
+            ['name' => 'General Knowledge'],
+            ['name' => 'Geography'],
+            ['name' => 'History'],
+            ['name' => 'Science'],
+            ['name' => 'Sports'],
+            ['name' => 'Music'],
+            ['name' => 'Movies and Series'],
+            ['name' => 'Animals'],
         ];
 
         foreach ($categories as $category) {

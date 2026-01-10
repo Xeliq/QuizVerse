@@ -17,32 +17,32 @@ class QuizSeeder extends Seeder
         $categories = Category::pluck('id', 'name');
 
         /*
-        |--------------------------------------------------------------------------
-        | 1. Quiz: Ogólna wiedza
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------------------
+        | 1. General Knowledge
+        |----------------------------------------------------------------------
         */
         $quiz1 = Quiz::create([
             'user_id' => $users[0]->id,
-            'category_id' => $categories['Ogólna wiedza'] ?? null,
-            'title' => 'Ogólna wiedza – sprawdź się!',
-            'description' => 'Pytania z różnych dziedzin: historia, nauka, geografia i kultura.',
+            'category_id' => $categories['General Knowledge'] ?? null,
+            'title' => 'General Knowledge - Test Yourself!',
+            'description' => 'Questions from various fields: history, science, geography, and culture.',
         ]);
 
         $q1 = Question::create([
             'quiz_id' => $quiz1->id,
-            'text' => 'Które z poniższych państw leży w Europie?',
+            'text' => 'Which of the following countries is in Europe?',
             'points' => 2,
         ]);
         Answer::insert([
-            ['question_id' => $q1->id, 'text' => 'Brazylia', 'is_correct' => false],
-            ['question_id' => $q1->id, 'text' => 'Hiszpania', 'is_correct' => true],
-            ['question_id' => $q1->id, 'text' => 'Egipt', 'is_correct' => false],
-            ['question_id' => $q1->id, 'text' => 'Kanada', 'is_correct' => false],
+            ['question_id' => $q1->id, 'text' => 'Brazil', 'is_correct' => false],
+            ['question_id' => $q1->id, 'text' => 'Spain', 'is_correct' => true],
+            ['question_id' => $q1->id, 'text' => 'Egypt', 'is_correct' => false],
+            ['question_id' => $q1->id, 'text' => 'Canada', 'is_correct' => false],
         ]);
 
         $q2 = Question::create([
             'quiz_id' => $quiz1->id,
-            'text' => 'Ile wynosi liczba kontynentów na Ziemi?',
+            'text' => 'How many continents are there on Earth?',
             'points' => 1,
         ]);
         Answer::insert([
@@ -54,47 +54,47 @@ class QuizSeeder extends Seeder
 
         $q3 = Question::create([
             'quiz_id' => $quiz1->id,
-            'text' => 'Jakie zwierzę jest symbolem pokoju?',
+            'text' => 'Which animal is a symbol of peace?',
             'points' => 1,
         ]);
         Answer::insert([
-            ['question_id' => $q3->id, 'text' => 'Orzeł', 'is_correct' => false],
-            ['question_id' => $q3->id, 'text' => 'Gołąb', 'is_correct' => true],
-            ['question_id' => $q3->id, 'text' => 'Lew', 'is_correct' => false],
-            ['question_id' => $q3->id, 'text' => 'Tygrys', 'is_correct' => false],
+            ['question_id' => $q3->id, 'text' => 'Eagle', 'is_correct' => false],
+            ['question_id' => $q3->id, 'text' => 'Dove', 'is_correct' => true],
+            ['question_id' => $q3->id, 'text' => 'Lion', 'is_correct' => false],
+            ['question_id' => $q3->id, 'text' => 'Tiger', 'is_correct' => false],
         ]);
 
         /*
-        |--------------------------------------------------------------------------
-        | 2. Geografia
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------------------
+        | 2. Geography
+        |----------------------------------------------------------------------
         */
         $quiz2 = Quiz::create([
             'user_id' => $users[1]->id,
-            'category_id' => $categories['Geografia'] ?? null,
-            'title' => 'Podróże po świecie',
-            'description' => 'Quiz dla miłośników map i geografii!',
+            'category_id' => $categories['Geography'] ?? null,
+            'title' => 'Travel Around the World',
+            'description' => 'A quiz for map and geography lovers!',
         ]);
 
         $questions = [
             [
-                'text' => 'Stolicą Kanady jest:',
+                'text' => 'The capital of Canada is:',
                 'answers' => ['Toronto', 'Ottawa', 'Vancouver', 'Montreal'],
                 'correct' => 1,
             ],
             [
-                'text' => 'Największa pustynia na świecie to:',
-                'answers' => ['Sahara', 'Gobi', 'Kalahari', 'Atakama'],
+                'text' => 'The largest desert in the world is:',
+                'answers' => ['Sahara', 'Gobi', 'Kalahari', 'Atacama'],
                 'correct' => 0,
             ],
             [
-                'text' => 'Które z poniższych jezior jest największe na świecie?',
-                'answers' => ['Jezioro Wiktorii', 'Morze Kaspijskie', 'Bajkał', 'Michigan'],
+                'text' => 'Which of the following lakes is the largest in the world?',
+                'answers' => ['Lake Victoria', 'Caspian Sea', 'Baikal', 'Michigan'],
                 'correct' => 1,
             ],
             [
-                'text' => 'W jakim kraju znajduje się góra Fuji?',
-                'answers' => ['Chiny', 'Japonia', 'Korea Południowa', 'Tajwan'],
+                'text' => 'In which country is Mount Fuji located?',
+                'answers' => ['China', 'Japan', 'South Korea', 'Taiwan'],
                 'correct' => 1,
             ],
         ];
@@ -115,36 +115,36 @@ class QuizSeeder extends Seeder
         }
 
         /*
-        |--------------------------------------------------------------------------
-        | 3. Historia
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------------------
+        | 3. History
+        |----------------------------------------------------------------------
         */
         $quiz3 = Quiz::create([
             'user_id' => $users[2]->id,
-            'category_id' => $categories['Historia'] ?? null,
-            'title' => 'Historia świata',
-            'description' => 'Sprawdź, co pamiętasz z lekcji historii!',
+            'category_id' => $categories['History'] ?? null,
+            'title' => 'World History',
+            'description' => 'Test what you remember from history lessons!',
         ]);
 
         $questions = [
             [
-                'text' => 'W którym roku wybuchła II wojna światowa?',
+                'text' => 'In which year did World War II begin?',
                 'answers' => ['1914', '1939', '1945', '1920'],
                 'correct' => 1,
             ],
             [
-                'text' => 'Kto był pierwszym prezydentem Stanów Zjednoczonych?',
+                'text' => 'Who was the first President of the United States?',
                 'answers' => ['Abraham Lincoln', 'George Washington', 'Thomas Jefferson', 'John Adams'],
                 'correct' => 1,
             ],
             [
-                'text' => 'W którym roku Polska odzyskała niepodległość?',
+                'text' => 'In which year did Poland regain independence?',
                 'answers' => ['1918', '1939', '1795', '1920'],
                 'correct' => 0,
             ],
             [
-                'text' => 'Jak nazywał się faraon, który zbudował Wielką Piramidę w Gizie?',
-                'answers' => ['Ramzes II', 'Cheops', 'Tutanchamon', 'Echnaton'],
+                'text' => 'What was the name of the pharaoh who built the Great Pyramid of Giza?',
+                'answers' => ['Ramesses II', 'Khufu', 'Tutankhamun', 'Akhenaten'],
                 'correct' => 1,
             ],
         ];
@@ -165,35 +165,35 @@ class QuizSeeder extends Seeder
         }
 
         /*
-        |--------------------------------------------------------------------------
-        | 4. Nauka
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------------------
+        | 4. Science
+        |----------------------------------------------------------------------
         */
         $quiz4 = Quiz::create([
             'user_id' => $users[0]->id,
-            'category_id' => $categories['Nauka'] ?? null,
-            'title' => 'Świat nauki',
-            'description' => 'Fizyka, chemia, biologia – sprawdź się!',
+            'category_id' => $categories['Science'] ?? null,
+            'title' => 'World of Science',
+            'description' => 'Physics, chemistry, biology – test yourself!',
         ]);
 
         $questions = [
             [
-                'text' => 'Który pierwiastek chemiczny ma symbol O?',
-                'answers' => ['Wodór', 'Tlen', 'Azot', 'Hel'],
+                'text' => 'Which chemical element has the symbol O?',
+                'answers' => ['Hydrogen', 'Oxygen', 'Nitrogen', 'Helium'],
                 'correct' => 1,
             ],
             [
-                'text' => 'Kto sformułował teorię względności?',
-                'answers' => ['Isaac Newton', 'Albert Einstein', 'Galileusz', 'Nikola Tesla'],
+                'text' => 'Who formulated the theory of relativity?',
+                'answers' => ['Isaac Newton', 'Albert Einstein', 'Galileo', 'Nikola Tesla'],
                 'correct' => 1,
             ],
             [
-                'text' => 'Jak nazywa się proces, w którym rośliny produkują tlen?',
-                'answers' => ['Fotosynteza', 'Oddychanie', 'Fermentacja', 'Transpiracja'],
+                'text' => 'What is the process called in which plants produce oxygen?',
+                'answers' => ['Photosynthesis', 'Respiration', 'Fermentation', 'Transpiration'],
                 'correct' => 0,
             ],
             [
-                'text' => 'Jakie jest przyspieszenie ziemskie (w m/s²)?',
+                'text' => 'What is the acceleration due to gravity on Earth (in m/s²)?',
                 'answers' => ['9.81', '10', '8.9', '11.2'],
                 'correct' => 0,
             ],
@@ -215,31 +215,31 @@ class QuizSeeder extends Seeder
         }
 
         /*
-        |--------------------------------------------------------------------------
-        | 5. Sport
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------------------
+        | 5. Sports
+        |----------------------------------------------------------------------
         */
         $quiz5 = Quiz::create([
             'user_id' => $users[1]->id,
-            'category_id' => $categories['Sport'] ?? null,
-            'title' => 'Quiz sportowy',
-            'description' => 'Piłka nożna, koszykówka i igrzyska olimpijskie!',
+            'category_id' => $categories['Sports'] ?? null,
+            'title' => 'Sports Quiz',
+            'description' => 'Football, basketball, and the Olympic Games!',
         ]);
 
         $questions = [
             [
-                'text' => 'Który kraj wygrał Mistrzostwa Świata w piłce nożnej w 2018 roku?',
-                'answers' => ['Niemcy', 'Francja', 'Brazylia', 'Argentyna'],
+                'text' => 'Which country won the FIFA World Cup in 2018?',
+                'answers' => ['Germany', 'France', 'Brazil', 'Argentina'],
                 'correct' => 1,
             ],
             [
-                'text' => 'Ile zawodników gra w drużynie siatkówki na boisku?',
+                'text' => 'How many players are on a volleyball team on the court?',
                 'answers' => ['5', '6', '7', '9'],
                 'correct' => 1,
             ],
             [
-                'text' => 'W którym mieście odbyły się Igrzyska Olimpijskie 2008?',
-                'answers' => ['Ateny', 'Londyn', 'Pekin', 'Rio de Janeiro'],
+                'text' => 'In which city were the 2008 Olympic Games held?',
+                'answers' => ['Athens', 'London', 'Beijing', 'Rio de Janeiro'],
                 'correct' => 2,
             ],
         ];
@@ -260,31 +260,31 @@ class QuizSeeder extends Seeder
         }
 
         /*
-        |--------------------------------------------------------------------------
-        | 6. Muzyka i filmy
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------------------
+        | 6. Music & Movies
+        |----------------------------------------------------------------------
         */
         $quiz6 = Quiz::create([
             'user_id' => $users[2]->id,
-            'category_id' => $categories['Muzyka'] ?? null,
-            'title' => 'Muzyka i filmy',
-            'description' => 'Sprawdź, jak dobrze znasz świat rozrywki!',
+            'category_id' => $categories['Music'] ?? null,
+            'title' => 'Music & Movies',
+            'description' => 'Test how well you know the entertainment world!',
         ]);
 
         $questions = [
             [
-                'text' => 'Kto był liderem zespołu Queen?',
+                'text' => 'Who was the lead singer of Queen?',
                 'answers' => ['Elton John', 'Freddie Mercury', 'David Bowie', 'Mick Jagger'],
                 'correct' => 1,
             ],
             [
-                'text' => 'Który film zdobył Oscara za najlepszy film w 1994 roku?',
-                'answers' => ['Pulp Fiction', 'Forrest Gump', 'Skazani na Shawshank', 'Titanic'],
+                'text' => 'Which movie won the Oscar for Best Picture in 1994?',
+                'answers' => ['Pulp Fiction', 'Forrest Gump', 'The Shawshank Redemption', 'Titanic'],
                 'correct' => 1,
             ],
             [
-                'text' => 'Jak nazywał się fikcyjny świat w serii "Władca Pierścieni"?',
-                'answers' => ['Narnia', 'Śródziemie', 'Hogwart', 'Pandora'],
+                'text' => 'What was the fictional world in "The Lord of the Rings" series?',
+                'answers' => ['Narnia', 'Middle-earth', 'Hogwarts', 'Pandora'],
                 'correct' => 1,
             ],
         ];
@@ -305,31 +305,31 @@ class QuizSeeder extends Seeder
         }
 
         /*
-        |--------------------------------------------------------------------------
-        | 7. Zwierzęta
-        |--------------------------------------------------------------------------
+        |----------------------------------------------------------------------
+        | 7. Animals
+        |----------------------------------------------------------------------
         */
         $quiz7 = Quiz::create([
             'user_id' => $users[0]->id,
-            'category_id' => $categories['Zwierzęta'] ?? null,
-            'title' => 'Świat zwierząt',
-            'description' => 'Czy wiesz, które zwierzę potrafi najwięcej?',
+            'category_id' => $categories['Animals'] ?? null,
+            'title' => 'Animal World',
+            'description' => 'Do you know which animal can do the most?',
         ]);
 
         $questions = [
             [
-                'text' => 'Jakie zwierzę jest największym ssakiem na Ziemi?',
-                'answers' => ['Słoń afrykański', 'Płetwal błękitny', 'Orka', 'Nosorożec'],
+                'text' => 'Which animal is the largest mammal on Earth?',
+                'answers' => ['African Elephant', 'Blue Whale', 'Orca', 'Rhinoceros'],
                 'correct' => 1,
             ],
             [
-                'text' => 'Który ptak nie potrafi latać?',
-                'answers' => ['Pingwin', 'Wróbel', 'Jastrząb', 'Gołąb'],
+                'text' => 'Which bird cannot fly?',
+                'answers' => ['Penguin', 'Sparrow', 'Hawk', 'Pigeon'],
                 'correct' => 0,
             ],
             [
-                'text' => 'Jak nazywa się młode konia?',
-                'answers' => ['Źrebak', 'Cielak', 'Jagnię', 'Koziołek'],
+                'text' => 'What is a baby horse called?',
+                'answers' => ['Foal', 'Calf', 'Lamb', 'Kid'],
                 'correct' => 0,
             ],
         ];

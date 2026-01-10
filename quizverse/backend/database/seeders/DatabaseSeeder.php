@@ -32,6 +32,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'test3@example.com',
         ]);
 
+        User::factory()->create([
+            'name' => 'Amares8',
+            'email' => 'amadi2003@op.pl',
+        ]);
+
         $this->call(CategorySeeder::class);
 
         $this->call(QuizSeeder::class);
