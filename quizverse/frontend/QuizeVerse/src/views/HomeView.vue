@@ -18,7 +18,7 @@
 
       <div class="trending-list">
         <div
-          v-for="quiz in quizzes.slice(0, 5)"
+          v-for="quiz in trendingQuizzes"
           :key="quiz.id"
           class="quiz-card"
           @click="goTo(`/quiz-page/${quiz.id}`)"
@@ -54,9 +54,9 @@
     <section class="how-section">
       <h2 class="section-title">How it works?</h2>
       <div class="how-steps">
-        <div class="step">1️. Register or Login</div>
-        <div class="step">2️. Choose or Create a Quiz</div>
-        <div class="step">3️. Play and Compete</div>
+        <div class="step">1️ Register or Login</div>
+        <div class="step">2️ Choose or Create a Quiz</div>
+        <div class="step">3️ Play and Compete</div>
       </div>
     </section>
 
@@ -97,6 +97,15 @@ const error = ref(null)
 const token = ref(localStorage.getItem('token'))
 
 const isLoggedIn = computed(() => !!token.value)
+
+
+
+const trendingQuizzes = computed(() => {
+  return [...quizzes.value]
+    .sort((a, b) => b.plays - a.plays)
+    .slice(0, 5)
+})
+
 
 onMounted(async () => {
   loading.value = true
