@@ -44,6 +44,7 @@ Backend	- http://localhost:8000 - API Laravel + sesje
 
 pgAdmin	- http://localhost:5050 - GUI do PostgreSQL
 
+Swagger - http://localhost:8000/api/documentation/#/
 
 ### Logowanie do pgAdmin
 
