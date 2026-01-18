@@ -7,7 +7,6 @@
 
       <div class="results-info">
         <p>Your results: <strong>{{ score }}/{{ total }}</strong> ({{ percentage }}%)</p>
-        <p>Time: <strong>{{ time }}</strong></p>
       </div>
 
       <div class="results-buttons">

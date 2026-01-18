@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -24,8 +25,8 @@ class ProfileController extends Controller
             'rank' => $rank,
             'percentile' => $percentile,
             'points' => $points,
-            'completedQuizzes' => $user->completedQuizzes()->select('id', 'title')->get(),
-            'createdQuizzes' => $user->createdQuizzes()->select('id', 'title')->get(),
+            'completedQuizzes' => $user->completedQuizzes()->select('quizzes.id', 'quizzes.title')->get(),
+            'createdQuizzes' => $user->createdQuizzes()->select('quizzes.id', 'quizzes.title')->get(),
         ]);
     }
 }

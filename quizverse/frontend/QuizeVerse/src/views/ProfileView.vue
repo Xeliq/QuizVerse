@@ -24,7 +24,7 @@
       <h2>Completed Quizzes</h2>
       <div class="quiz-list">
         <div v-for="quiz in completedQuizzes" :key="quiz.id" class="quiz-item">
-          <p>{{ quiz.title }} <span class="quiz-author">by {{ quiz.user?.name }}</span></p>
+          <p>{{ quiz.title }}</p>
         </div>
       </div>
     </section>
@@ -34,7 +34,7 @@
       <h2>Created Quizzes</h2>
       <div class="quiz-list">
         <div v-for="quiz in createdQuizzes" :key="quiz.id" class="quiz-item">
-          <p>{{ quiz.title }} <span class="quiz-author">by {{ quiz.user?.name }}</span></p>
+          <p>{{ quiz.title }}</p>
         </div>
       </div>
     </section>

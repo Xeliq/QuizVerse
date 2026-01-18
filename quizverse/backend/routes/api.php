@@ -11,7 +11,7 @@ use App\Http\Controllers\Api\AnswerController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\QuizResultsController;
 use App\Http\Controllers\Api\CommentController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Api\ProfileController;
 
 /*
 |--------------------------------------------------------------------------

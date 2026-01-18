@@ -65,7 +65,7 @@ class User extends Authenticatable
 
     public function completedQuizzes()
     {
-        return $this->belongsToMany(Quiz::class, 'quiz_results');
+        return $this->belongsToMany(Quiz::class, 'quiz_results', 'user_id', 'quiz_id');
     }
 
     public function createdQuizzes()
