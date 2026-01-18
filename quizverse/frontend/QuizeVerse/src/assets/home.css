@@ -154,6 +154,7 @@
   justify-content: center;
   gap: 30px;
   margin-top: 20px;
+  flex-wrap: wrap;
 }
 
 .step {

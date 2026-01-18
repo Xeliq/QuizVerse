@@ -54,9 +54,9 @@
     <section class="how-section">
       <h2 class="section-title">How it works?</h2>
       <div class="how-steps">
-        <div class="step">1️ Register or Login</div>
-        <div class="step">2️ Choose or Create a Quiz</div>
-        <div class="step">3️ Play and Compete</div>
+        <div class="step">1️. Register or Login</div>
+        <div class="step">2️. Choose or Create a Quiz</div>
+        <div class="step">3️. Play and Compete</div>
       </div>
     </section>
 

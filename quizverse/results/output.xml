@@ -1,0 +1,847 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.1 (Python 3.13.7 on win32)" generated="2026-01-18T22:30:06.688372" rpa="false" schemaversion="5">
+<suite id="s1" name="Tests" source="C:\Users\mikiw\Documents\GITHUB_REPO\QuizVerse\quizverse\tests">
+<suite id="s1-s1" name="Api" source="C:\Users\mikiw\Documents\GITHUB_REPO\QuizVerse\quizverse\tests\api.robot">
+<test id="s1-s1-t1" name="Login And Print Token" line="12">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-01-18T22:30:06.797064" level="INFO">Creating Session using : alias=api, url=http://localhost:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>api</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-01-18T22:30:06.796659" elapsed="0.000528"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-01-18T22:30:06.797785" level="INFO">&amp;{payload} = { email=test@test.test | password=testtest }</msg>
+<var>&amp;{payload}</var>
+<arg>email=${EMAIL}</arg>
+<arg>password=${PASSWORD}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-01-18T22:30:06.797354" elapsed="0.000448"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-01-18T22:30:08.608999" level="INFO">POST Request : url=http://localhost:8000/api/login 
+ path_url=/api/login 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '51', 'Content-Type': 'application/json'} 
+ body=b'{"email": "test@test.test", "password": "testtest"}' 
+ </msg>
+<msg time="2026-01-18T22:30:08.609108" level="INFO">POST Response : url=http://localhost:8000/api/login 
+ status=200, reason=OK 
+ headers={'Host': 'localhost:8000', 'Connection': 'close', 'X-Powered-By': 'PHP/8.2.29', 'Cache-Control': 'no-cache, private', 'Date': 'Sun, 18 Jan 2026 21:30:08 GMT', 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'http://localhost:5173'} 
+ body={"access_token":"7|o2CgAi7lEvHrFfvgcRIbGUz7xwPIT00GYgwixGZ8e1570797","token_type":"Bearer","user":{"id":7,"name":"test","email":"test@test.test","email_verified_at":null,"created_at":"2026-01-18T21:29:42.000000Z","updated_at":"2026-01-18T21:29:42.000000Z","points":0},"status":"Login successful"} 
+ </msg>
+<msg time="2026-01-18T22:30:08.609229" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>/api/login</arg>
+<arg>json=${payload}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-01-18T22:30:06.797938" elapsed="1.811310"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-01-18T22:30:08.609905" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.609483" elapsed="0.000459"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-01-18T22:30:08.610467" level="INFO">${data} = {'access_token': '7|o2CgAi7lEvHrFfvgcRIbGUz7xwPIT00GYgwixGZ8e1570797', 'token_type': 'Bearer', 'user': {'id': 7, 'name': 'test', 'email': 'test@test.test', 'email_verified_at': None, 'created_at': '20...</msg>
+<var>${data}</var>
+<arg>json.loads('''${resp.text}''')</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.610076" elapsed="0.000405"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<msg time="2026-01-18T22:30:08.610939" level="FAIL">Dictionary does not contain key 'token'.</msg>
+<arg>${data}</arg>
+<arg>token</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="FAIL" start="2026-01-18T22:30:08.610807" elapsed="0.000273">Dictionary does not contain key 'token'.</status>
+</kw>
+<msg time="2026-01-18T22:30:08.611161" level="INFO">${has_token} = False</msg>
+<var>${has_token}</var>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${data}</arg>
+<arg>token</arg>
+<doc>Runs the specified keyword and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.610633" elapsed="0.000546"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<arg>${data}</arg>
+<arg>access_token</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.611500" elapsed="0.000083"/>
+</kw>
+<msg time="2026-01-18T22:30:08.611626" level="INFO">${has_access} = True</msg>
+<var>${has_access}</var>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${data}</arg>
+<arg>access_token</arg>
+<doc>Runs the specified keyword and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.611337" elapsed="0.000300"/>
+</kw>
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2026-01-18T22:30:08.612059" level="INFO">${token} = 7|o2CgAi7lEvHrFfvgcRIbGUz7xwPIT00GYgwixGZ8e1570797</msg>
+<var>${token}</var>
+<arg>${has_token}</arg>
+<arg>${data["token"]}</arg>
+<arg>${data["access_token"]}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.611764" elapsed="0.000308"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-01-18T22:30:08.612431" level="INFO">${token} = 7|o2CgAi7lEvHrFfvgcRIbGUz7xwPIT00GYgwixGZ8e1570797</msg>
+<arg>${token}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.612237" elapsed="0.000216"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>\nTOKEN SAVED: ${token}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.612679" elapsed="0.000185"/>
+</kw>
+<status status="PASS" start="2026-01-18T22:30:06.795908" elapsed="1.817067"/>
+</test>
+<test id="s1-s1-t2" name="Get All Quizzes" line="25">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-01-18T22:30:08.613660" level="INFO">&amp;{headers} = { accept=application/json | Authorization=Bearer 7|o2CgAi7lEvHrFfvgcRIbGUz7xwPIT00GYgwixGZ8e1570797 }</msg>
+<var>&amp;{headers}</var>
+<arg>accept=application/json</arg>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.613454" elapsed="0.000221"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-01-18T22:30:08.737570" level="INFO">GET Request : url=http://localhost:8000/api/all/quizzes 
+ path_url=/api/all/quizzes 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'accept': 'application/json', 'Connection': 'keep-alive', 'Authorization': 'Bearer 7|o2CgAi7lEvHrFfvgcRIbGUz7xwPIT00GYgwixGZ8e1570797'} 
+ body=None 
+ </msg>
+<msg time="2026-01-18T22:30:08.737676" level="INFO">GET Response : url=http://localhost:8000/api/all/quizzes 
+ status=200, reason=OK 
+ headers={'Host': 'localhost:8000', 'Connection': 'close', 'X-Powered-By': 'PHP/8.2.29', 'Cache-Control': 'no-cache, private', 'Date': 'Sun, 18 Jan 2026 21:30:08 GMT', 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'http://localhost:5173'} 
+ body=[{"id":1,"user_id":1,"category_id":1,"title":"General Knowledge - Test Yourself!","description":"Questions from various fields: history, science, geography, and culture.","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z","image_path":null,"results_count":1,"image_url":null,"category":{"id":1,"name":"General Knowledge","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z"}},{"id":2,"user_id":2,"category_id":2,"title":"Travel Around the World","description":"A quiz for map and geography lovers!","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z","image_path":null,"results_count":0,"image_url":null,"category":{"id":2,"name":"Geography","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z"}},{"id":3,"user_id":3,"category_id":3,"title":"World History","description":"Test what you remember from history lessons!","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z","image_path":null,"results_count":1,"image_url":null,"category":{"id":3,"name":"History","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z"}},{"id":4,"user_id":1,"category_id":4,"title":"World of Science","description":"Physics, chemistry, biology \u2013 test yourself!","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z","image_path":null,"results_count":0,"image_url":null,"category":{"id":4,"name":"Science","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z"}},{"id":5,"user_id":2,"category_id":5,"title":"Sports Quiz","description":"Football, basketball, and the Olympic Games!","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z","image_path":null,"results_count":2,"image_url":null,"category":{"id":5,"name":"Sports","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z"}},{"id":6,"user_id":3,"category_id":6,"title":"Music &amp; Movies","description":"Test how well you know the entertainment world!","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z","image_path":null,"results_count":0,"image_url":null,"category":{"id":6,"name":"Music","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z"}},{"id":7,"user_id":1,"category_id":8,"title":"Animal World","description":"Do you know which animal can do the most?","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z","image_path":null,"results_count":0,"image_url":null,"category":{"id":8,"name":"Animals","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z"}},{"id":8,"user_id":5,"category_id":1,"title":"a","description":"a","created_at":"2026-01-10T11:51:26.000000Z","updated_at":"2026-01-10T11:51:26.000000Z","image_path":null,"results_count":0,"image_url":null,"category":{"id":1,"name":"General Knowledge","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z"}},{"id":9,"user_id":5,"category_id":1,"title":"a","description":"a","created_at":"2026-01-10T11:51:26.000000Z","updated_at":"2026-01-10T11:51:26.000000Z","image_path":null,"results_count":0,"image_url":null,"category":{"id":1,"name":"General Knowledge","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z"}}] 
+ </msg>
+<msg time="2026-01-18T22:30:08.737962" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>/api/all/quizzes</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.613830" elapsed="0.124147"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-01-18T22:30:08.738574" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.738184" elapsed="0.000425"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-01-18T22:30:08.740022" level="INFO">${data} = [{'id': 1, 'user_id': 1, 'category_id': 1, 'title': 'General Knowledge - Test Yourself!', 'description': 'Questions from various fields: history, science, geography, and culture.', 'created_at': '2026...</msg>
+<var>${data}</var>
+<arg>json.loads('''${resp.text}''')</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.738758" elapsed="0.001293"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>\n</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.740198" elapsed="0.000183"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${quiz["title"]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.740639" elapsed="0.000319"/>
+</kw>
+<var name="${quiz}">{'id': 1, 'user_id': 1, 'category_id': 1, 'title': 'General Knowledge - Test Yourself!', 'description': 'Questions from various fields: history, science, geography, and culture.', 'created_at': '2026-...</var>
+<status status="PASS" start="2026-01-18T22:30:08.740596" elapsed="0.000393"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${quiz["title"]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.741107" elapsed="0.000381"/>
+</kw>
+<var name="${quiz}">{'id': 2, 'user_id': 2, 'category_id': 2, 'title': 'Travel Around the World', 'description': 'A quiz for map and geography lovers!', 'created_at': '2026-01-10T11:22:48.000000Z', 'updated_at': '2026-01...</var>
+<status status="PASS" start="2026-01-18T22:30:08.741060" elapsed="0.000466"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${quiz["title"]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.741657" elapsed="0.000447"/>
+</kw>
+<var name="${quiz}">{'id': 3, 'user_id': 3, 'category_id': 3, 'title': 'World History', 'description': 'Test what you remember from history lessons!', 'created_at': '2026-01-10T11:22:48.000000Z', 'updated_at': '2026-01-1...</var>
+<status status="PASS" start="2026-01-18T22:30:08.741604" elapsed="0.000530"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${quiz["title"]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.742250" elapsed="0.000314"/>
+</kw>
+<var name="${quiz}">{'id': 4, 'user_id': 1, 'category_id': 4, 'title': 'World of Science', 'description': 'Physics, chemistry, biology – test yourself!', 'created_at': '2026-01-10T11:22:48.000000Z', 'updated_at': '2026-0...</var>
+<status status="PASS" start="2026-01-18T22:30:08.742203" elapsed="0.000391"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${quiz["title"]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.742706" elapsed="0.000315"/>
+</kw>
+<var name="${quiz}">{'id': 5, 'user_id': 2, 'category_id': 5, 'title': 'Sports Quiz', 'description': 'Football, basketball, and the Olympic Games!', 'created_at': '2026-01-10T11:22:48.000000Z', 'updated_at': '2026-01-10T...</var>
+<status status="PASS" start="2026-01-18T22:30:08.742663" elapsed="0.000388"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${quiz["title"]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.743150" elapsed="0.000301"/>
+</kw>
+<var name="${quiz}">{'id': 6, 'user_id': 3, 'category_id': 6, 'title': 'Music &amp; Movies', 'description': 'Test how well you know the entertainment world!', 'created_at': '2026-01-10T11:22:48.000000Z', 'updated_at': '2026-...</var>
+<status status="PASS" start="2026-01-18T22:30:08.743109" elapsed="0.000363"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${quiz["title"]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.743554" elapsed="0.000267"/>
+</kw>
+<var name="${quiz}">{'id': 7, 'user_id': 1, 'category_id': 8, 'title': 'Animal World', 'description': 'Do you know which animal can do the most?', 'created_at': '2026-01-10T11:22:48.000000Z', 'updated_at': '2026-01-10T11...</var>
+<status status="PASS" start="2026-01-18T22:30:08.743519" elapsed="0.000323"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${quiz["title"]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.743923" elapsed="0.000265"/>
+</kw>
+<var name="${quiz}">{'id': 8, 'user_id': 5, 'category_id': 1, 'title': 'a', 'description': 'a', 'created_at': '2026-01-10T11:51:26.000000Z', 'updated_at': '2026-01-10T11:51:26.000000Z', 'image_path': None, 'results_count...</var>
+<status status="PASS" start="2026-01-18T22:30:08.743888" elapsed="0.000320"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${quiz["title"]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.744286" elapsed="0.000244"/>
+</kw>
+<var name="${quiz}">{'id': 9, 'user_id': 5, 'category_id': 1, 'title': 'a', 'description': 'a', 'created_at': '2026-01-10T11:51:26.000000Z', 'updated_at': '2026-01-10T11:51:26.000000Z', 'image_path': None, 'results_count...</var>
+<status status="PASS" start="2026-01-18T22:30:08.744253" elapsed="0.000294"/>
+</iter>
+<var>${quiz}</var>
+<value>@{data}</value>
+<status status="PASS" start="2026-01-18T22:30:08.740470" elapsed="0.004092"/>
+</for>
+<status status="PASS" start="2026-01-18T22:30:08.613221" elapsed="0.131435"/>
+</test>
+<test id="s1-s1-t3" name="Create New Quiz" line="37">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-01-18T22:30:08.745161" level="INFO">&amp;{headers} = { accept=application/json | Content-Type=application/json | Authorization=Bearer 7|o2CgAi7lEvHrFfvgcRIbGUz7xwPIT00GYgwixGZ8e1570797 }</msg>
+<var>&amp;{headers}</var>
+<arg>accept=application/json</arg>
+<arg>Content-Type=application/json</arg>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.744982" elapsed="0.000192"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-01-18T22:30:08.745440" level="INFO">&amp;{a1} = { text=966 | is_correct=True }</msg>
+<var>&amp;{a1}</var>
+<arg>text=966</arg>
+<arg>is_correct=${True}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.745268" elapsed="0.000185"/>
+</kw>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2026-01-18T22:30:08.745647" level="INFO">@{answers} = [ {'text': '966', 'is_correct': True} ]</msg>
+<var>@{answers}</var>
+<arg>${a1}</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.745528" elapsed="0.000130"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-01-18T22:30:08.745878" level="INFO">&amp;{q1} = { text=Kiedy został założony polski staat? | points=10 | answers=[{'text': '966', 'is_correct': True}] }</msg>
+<var>&amp;{q1}</var>
+<arg>text=Kiedy został założony polski staat?</arg>
+<arg>points=10</arg>
+<arg>answers=${answers}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.745731" elapsed="0.000159"/>
+</kw>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2026-01-18T22:30:08.746148" level="INFO">@{questions} = [ {'text': 'Kiedy został założony polski staat?', 'points': '10', 'answers': [{'text': '966', 'is_correct': True}]} ]</msg>
+<var>@{questions}</var>
+<arg>${q1}</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.746030" elapsed="0.000129"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-01-18T22:30:08.746387" level="INFO">&amp;{payload} = { title=Historia Polski | description=string | category_id=1 | questions=[{'text': 'Kiedy został założony polski staat?', 'points': '10', 'answers': [{'text': '966', 'is_correct': True}]}] }</msg>
+<var>&amp;{payload}</var>
+<arg>title=Historia Polski</arg>
+<arg>description=string</arg>
+<arg>category_id=1</arg>
+<arg>questions=${questions}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.746236" elapsed="0.000163"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-01-18T22:30:08.855784" level="INFO">POST Request : url=http://localhost:8000/api/quizzes 
+ path_url=/api/quizzes 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Authorization': 'Bearer 7|o2CgAi7lEvHrFfvgcRIbGUz7xwPIT00GYgwixGZ8e1570797', 'Content-Length': '218'} 
+ body=b'{"title": "Historia Polski", "description": "string", "category_id": "1", "questions": [{"text": "Kiedy zosta\\u0142 za\\u0142o\\u017cony polski staat?", "points": "10", "answers": [{"text": "966", "is_correct": true}]}]}' 
+ </msg>
+<msg time="2026-01-18T22:30:08.855850" level="INFO">POST Response : url=http://localhost:8000/api/quizzes 
+ status=201, reason=Created 
+ headers={'Host': 'localhost:8000', 'Connection': 'close', 'X-Powered-By': 'PHP/8.2.29', 'Cache-Control': 'no-cache, private', 'Date': 'Sun, 18 Jan 2026 21:30:08 GMT', 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'http://localhost:5173'} 
+ body={"message":"Quiz created successfully","quiz":{"title":"Historia Polski","description":"string","category_id":"1","user_id":7,"image_path":null,"updated_at":"2026-01-18T21:30:08.000000Z","created_at":"2026-01-18T21:30:08.000000Z","id":10,"image_url":null}} 
+ </msg>
+<msg time="2026-01-18T22:30:08.855937" level="INFO">${resp} = &lt;Response [201]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>/api/quizzes</arg>
+<arg>headers=${headers}</arg>
+<arg>json=${payload}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.746477" elapsed="0.109473"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${resp.status_code} == 200 or ${resp.status_code} == 201</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.856157" elapsed="0.000723"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-01-18T22:30:08.857356" level="INFO">${data} = {'message': 'Quiz created successfully', 'quiz': {'title': 'Historia Polski', 'description': 'string', 'category_id': '1', 'user_id': 7, 'image_path': None, 'updated_at': '2026-01-18T21:30:08.000000Z'...</msg>
+<var>${data}</var>
+<arg>json.loads('''${resp.text}''')</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.857011" elapsed="0.000359"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>RESPONSE: ${data}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.857550" elapsed="0.000167"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-18T22:30:08.858046" level="INFO">${quiz_id} = 10</msg>
+<var>${quiz_id}</var>
+<arg>${data["quiz"]["id"]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.857805" elapsed="0.000253"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-01-18T22:30:08.858284" level="INFO">${quiz_id} = 10</msg>
+<arg>${quiz_id}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.858158" elapsed="0.000143"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>\nCREATED QUIZ ID: ${quiz_id}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.858369" elapsed="0.000125"/>
+</kw>
+<status status="PASS" start="2026-01-18T22:30:08.744827" elapsed="0.113742"/>
+</test>
+<test id="s1-s1-t4" name="Verify Created Quiz Exists" line="62">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-01-18T22:30:08.859093" level="INFO">&amp;{headers} = { accept=application/json | Authorization=Bearer 7|o2CgAi7lEvHrFfvgcRIbGUz7xwPIT00GYgwixGZ8e1570797 }</msg>
+<var>&amp;{headers}</var>
+<arg>accept=application/json</arg>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.858933" elapsed="0.000173"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-01-18T22:30:08.944441" level="INFO">GET Request : url=http://localhost:8000/api/quizzes/10 
+ path_url=/api/quizzes/10 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'accept': 'application/json', 'Connection': 'keep-alive', 'Authorization': 'Bearer 7|o2CgAi7lEvHrFfvgcRIbGUz7xwPIT00GYgwixGZ8e1570797'} 
+ body=None 
+ </msg>
+<msg time="2026-01-18T22:30:08.944513" level="INFO">GET Response : url=http://localhost:8000/api/quizzes/10 
+ status=200, reason=OK 
+ headers={'Host': 'localhost:8000', 'Connection': 'close', 'X-Powered-By': 'PHP/8.2.29', 'Cache-Control': 'no-cache, private', 'Date': 'Sun, 18 Jan 2026 21:30:08 GMT', 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'http://localhost:5173'} 
+ body={"id":10,"user_id":7,"category_id":1,"title":"Historia Polski","description":"string","created_at":"2026-01-18T21:30:08.000000Z","updated_at":"2026-01-18T21:30:08.000000Z","image_path":null,"image_url":null,"category":{"id":1,"name":"General Knowledge","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z"},"user":{"id":7,"name":"test","email":"test@test.test","email_verified_at":null,"created_at":"2026-01-18T21:29:42.000000Z","updated_at":"2026-01-18T21:29:42.000000Z","points":0},"questions":[{"id":27,"quiz_id":10,"text":"Kiedy zosta\u0142 za\u0142o\u017cony polski staat?","points":10,"image_path":null,"created_at":"2026-01-18T21:30:08.000000Z","updated_at":"2026-01-18T21:30:08.000000Z","image_url":null,"answers":[{"id":99,"question_id":27,"text":"966","is_correct":true,"image_path":null,"created_at":"2026-01-18T21:30:08.000000Z","updated_at":"2026-01-18T21:30:08.000000Z","image_url":null}]}]} 
+ </msg>
+<msg time="2026-01-18T22:30:08.944602" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>/api/quizzes/${quiz_id}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.859228" elapsed="0.085390"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-01-18T22:30:08.945258" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.944832" elapsed="0.000463"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-01-18T22:30:08.945823" level="INFO">${data} = {'id': 10, 'user_id': 7, 'category_id': 1, 'title': 'Historia Polski', 'description': 'string', 'created_at': '2026-01-18T21:30:08.000000Z', 'updated_at': '2026-01-18T21:30:08.000000Z', 'image_path': ...</msg>
+<var>${data}</var>
+<arg>json.loads('''${resp.text}''')</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.945434" elapsed="0.000437"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<msg time="2026-01-18T22:30:08.946299" level="FAIL">Dictionary does not contain key 'quiz'.</msg>
+<arg>${data}</arg>
+<arg>quiz</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="FAIL" start="2026-01-18T22:30:08.946185" elapsed="0.000167">Dictionary does not contain key 'quiz'.</status>
+</kw>
+<msg time="2026-01-18T22:30:08.946399" level="INFO">${has_quiz} = False</msg>
+<var>${has_quiz}</var>
+<arg>Dictionary Should Contain Key</arg>
+<arg>${data}</arg>
+<arg>quiz</arg>
+<doc>Runs the specified keyword and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.946025" elapsed="0.000384"/>
+</kw>
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2026-01-18T22:30:08.946751" level="INFO">${quiz} = {'id': 10, 'user_id': 7, 'category_id': 1, 'title': 'Historia Polski', 'description': 'string', 'created_at': '2026-01-18T21:30:08.000000Z', 'updated_at': '2026-01-18T21:30:08.000000Z', 'image_path': ...</msg>
+<var>${quiz}</var>
+<arg>${has_quiz}</arg>
+<arg>${data["quiz"]}</arg>
+<arg>${data}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.946553" elapsed="0.000212"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${quiz["id"]}</arg>
+<arg>${quiz_id}</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.946881" elapsed="0.000299"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${quiz["title"]}</arg>
+<arg>Historia Polski</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.947289" elapsed="0.000248"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>\nQUIZ VERIFIED: ${quiz["id"]} - ${quiz["title"]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.947661" elapsed="0.000461"/>
+</kw>
+<status status="PASS" start="2026-01-18T22:30:08.858771" elapsed="0.089507"/>
+</test>
+<test id="s1-s1-t5" name="Get My Quizzes" line="75">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-01-18T22:30:08.948841" level="INFO">&amp;{headers} = { accept=application/json | Authorization=Bearer 7|o2CgAi7lEvHrFfvgcRIbGUz7xwPIT00GYgwixGZ8e1570797 }</msg>
+<var>&amp;{headers}</var>
+<arg>accept=application/json</arg>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.948662" elapsed="0.000193"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-01-18T22:30:09.032713" level="INFO">GET Request : url=http://localhost:8000/api/quizzes 
+ path_url=/api/quizzes 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'accept': 'application/json', 'Connection': 'keep-alive', 'Authorization': 'Bearer 7|o2CgAi7lEvHrFfvgcRIbGUz7xwPIT00GYgwixGZ8e1570797'} 
+ body=None 
+ </msg>
+<msg time="2026-01-18T22:30:09.032791" level="INFO">GET Response : url=http://localhost:8000/api/quizzes 
+ status=200, reason=OK 
+ headers={'Host': 'localhost:8000', 'Connection': 'close', 'X-Powered-By': 'PHP/8.2.29', 'Cache-Control': 'no-cache, private', 'Date': 'Sun, 18 Jan 2026 21:30:09 GMT', 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'http://localhost:5173'} 
+ body=[{"id":10,"user_id":7,"category_id":1,"title":"Historia Polski","description":"string","created_at":"2026-01-18T21:30:08.000000Z","updated_at":"2026-01-18T21:30:08.000000Z","image_path":null,"image_url":null,"category":{"id":1,"name":"General Knowledge","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z"}}] 
+ </msg>
+<msg time="2026-01-18T22:30:09.032952" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>/api/quizzes</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-01-18T22:30:08.948987" elapsed="0.084006"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-01-18T22:30:09.033741" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-01-18T22:30:09.033285" elapsed="0.000494"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-01-18T22:30:09.034328" level="INFO">${data} = [{'id': 10, 'user_id': 7, 'category_id': 1, 'title': 'Historia Polski', 'description': 'string', 'created_at': '2026-01-18T21:30:08.000000Z', 'updated_at': '2026-01-18T21:30:08.000000Z', 'image_path':...</msg>
+<var>${data}</var>
+<arg>json.loads('''${resp.text}''')</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-01-18T22:30:09.033940" elapsed="0.000402"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>\n</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:09.034456" elapsed="0.000154"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${q["id"]} - ${q["title"]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:09.034858" elapsed="0.000465"/>
+</kw>
+<var name="${q}">{'id': 10, 'user_id': 7, 'category_id': 1, 'title': 'Historia Polski', 'description': 'string', 'created_at': '2026-01-18T21:30:08.000000Z', 'updated_at': '2026-01-18T21:30:08.000000Z', 'image_path': ...</var>
+<status status="PASS" start="2026-01-18T22:30:09.034816" elapsed="0.000528"/>
+</iter>
+<var>${q}</var>
+<value>@{data}</value>
+<status status="PASS" start="2026-01-18T22:30:09.034704" elapsed="0.000658"/>
+</for>
+<kw name="Create List" owner="BuiltIn">
+<msg time="2026-01-18T22:30:09.035561" level="INFO">${ids} = []</msg>
+<var>${ids}</var>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2026-01-18T22:30:09.035456" elapsed="0.000116"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Append To List" owner="Collections">
+<arg>${ids}</arg>
+<arg>${q["id"]}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" start="2026-01-18T22:30:09.036124" elapsed="0.000284"/>
+</kw>
+<var name="${q}">{'id': 10, 'user_id': 7, 'category_id': 1, 'title': 'Historia Polski', 'description': 'string', 'created_at': '2026-01-18T21:30:08.000000Z', 'updated_at': '2026-01-18T21:30:08.000000Z', 'image_path': ...</var>
+<status status="PASS" start="2026-01-18T22:30:09.036080" elapsed="0.000352"/>
+</iter>
+<var>${q}</var>
+<value>@{data}</value>
+<status status="PASS" start="2026-01-18T22:30:09.035675" elapsed="0.000772"/>
+</for>
+<kw name="List Should Contain Value" owner="Collections">
+<arg>${ids}</arg>
+<arg>${quiz_id}</arg>
+<doc>Fails if the ``value`` is not found from ``list``.</doc>
+<status status="PASS" start="2026-01-18T22:30:09.036590" elapsed="0.000190"/>
+</kw>
+<status status="PASS" start="2026-01-18T22:30:08.948479" elapsed="0.088499"/>
+</test>
+<test id="s1-s1-t6" name="Get Categories" line="92">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-01-18T22:30:09.037638" level="INFO">&amp;{headers} = { accept=application/json | Authorization=Bearer 7|o2CgAi7lEvHrFfvgcRIbGUz7xwPIT00GYgwixGZ8e1570797 }</msg>
+<var>&amp;{headers}</var>
+<arg>accept=application/json</arg>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-01-18T22:30:09.037452" elapsed="0.000199"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-01-18T22:30:10.422875" level="INFO">GET Request : url=http://localhost:8000/api/categories 
+ path_url=/api/categories 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'accept': 'application/json', 'Connection': 'keep-alive', 'Authorization': 'Bearer 7|o2CgAi7lEvHrFfvgcRIbGUz7xwPIT00GYgwixGZ8e1570797'} 
+ body=None 
+ </msg>
+<msg time="2026-01-18T22:30:10.422945" level="INFO">GET Response : url=http://localhost:8000/api/categories 
+ status=200, reason=OK 
+ headers={'Host': 'localhost:8000', 'Connection': 'close', 'X-Powered-By': 'PHP/8.2.29', 'Cache-Control': 'no-cache, private', 'Date': 'Sun, 18 Jan 2026 21:30:10 GMT', 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'http://localhost:5173'} 
+ body={"status":"success","categories":[{"id":1,"name":"General Knowledge","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z"},{"id":2,"name":"Geography","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z"},{"id":3,"name":"History","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z"},{"id":4,"name":"Science","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z"},{"id":5,"name":"Sports","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z"},{"id":6,"name":"Music","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z"},{"id":7,"name":"Movies and Series","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z"},{"id":8,"name":"Animals","created_at":"2026-01-10T11:22:48.000000Z","updated_at":"2026-01-10T11:22:48.000000Z"}]} 
+ </msg>
+<msg time="2026-01-18T22:30:10.423034" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>/api/categories</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-01-18T22:30:09.037865" elapsed="1.385181"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-01-18T22:30:10.423615" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.423254" elapsed="0.000391"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-01-18T22:30:10.424156" level="INFO">${data} = {'status': 'success', 'categories': [{'id': 1, 'name': 'General Knowledge', 'created_at': '2026-01-10T11:22:48.000000Z', 'updated_at': '2026-01-10T11:22:48.000000Z'}, {'id': 2, 'name': 'Geography', 'c...</msg>
+<var>${data}</var>
+<arg>json.loads('''${resp.text}''')</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.423795" elapsed="0.000375"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${data["status"]}</arg>
+<arg>success</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.424306" elapsed="0.000279"/>
+</kw>
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<arg>${data}</arg>
+<arg>categories</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.424714" elapsed="0.000084"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>\n</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.424919" elapsed="0.000188"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${cat["id"]} - ${cat["name"]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.425452" elapsed="0.000364"/>
+</kw>
+<var name="${cat}">{'id': 1, 'name': 'General Knowledge', 'created_at': '2026-01-10T11:22:48.000000Z', 'updated_at': '2026-01-10T11:22:48.000000Z'}</var>
+<status status="PASS" start="2026-01-18T22:30:10.425415" elapsed="0.000422"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${cat["id"]} - ${cat["name"]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.425909" elapsed="0.000338"/>
+</kw>
+<var name="${cat}">{'id': 2, 'name': 'Geography', 'created_at': '2026-01-10T11:22:48.000000Z', 'updated_at': '2026-01-10T11:22:48.000000Z'}</var>
+<status status="PASS" start="2026-01-18T22:30:10.425878" elapsed="0.000387"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${cat["id"]} - ${cat["name"]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.426329" elapsed="0.000345"/>
+</kw>
+<var name="${cat}">{'id': 3, 'name': 'History', 'created_at': '2026-01-10T11:22:48.000000Z', 'updated_at': '2026-01-10T11:22:48.000000Z'}</var>
+<status status="PASS" start="2026-01-18T22:30:10.426300" elapsed="0.000402"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${cat["id"]} - ${cat["name"]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.426790" elapsed="0.000416"/>
+</kw>
+<var name="${cat}">{'id': 4, 'name': 'Science', 'created_at': '2026-01-10T11:22:48.000000Z', 'updated_at': '2026-01-10T11:22:48.000000Z'}</var>
+<status status="PASS" start="2026-01-18T22:30:10.426753" elapsed="0.000479"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${cat["id"]} - ${cat["name"]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.427321" elapsed="0.000404"/>
+</kw>
+<var name="${cat}">{'id': 5, 'name': 'Sports', 'created_at': '2026-01-10T11:22:48.000000Z', 'updated_at': '2026-01-10T11:22:48.000000Z'}</var>
+<status status="PASS" start="2026-01-18T22:30:10.427283" elapsed="0.000462"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${cat["id"]} - ${cat["name"]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.427815" elapsed="0.000338"/>
+</kw>
+<var name="${cat}">{'id': 6, 'name': 'Music', 'created_at': '2026-01-10T11:22:48.000000Z', 'updated_at': '2026-01-10T11:22:48.000000Z'}</var>
+<status status="PASS" start="2026-01-18T22:30:10.427784" elapsed="0.000390"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${cat["id"]} - ${cat["name"]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.428247" elapsed="0.000335"/>
+</kw>
+<var name="${cat}">{'id': 7, 'name': 'Movies and Series', 'created_at': '2026-01-10T11:22:48.000000Z', 'updated_at': '2026-01-10T11:22:48.000000Z'}</var>
+<status status="PASS" start="2026-01-18T22:30:10.428214" elapsed="0.000384"/>
+</iter>
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${cat["id"]} - ${cat["name"]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.428662" elapsed="0.000451"/>
+</kw>
+<var name="${cat}">{'id': 8, 'name': 'Animals', 'created_at': '2026-01-10T11:22:48.000000Z', 'updated_at': '2026-01-10T11:22:48.000000Z'}</var>
+<status status="PASS" start="2026-01-18T22:30:10.428633" elapsed="0.000516"/>
+</iter>
+<var>${cat}</var>
+<value>@{data["categories"]}</value>
+<status status="PASS" start="2026-01-18T22:30:10.425208" elapsed="0.003955"/>
+</for>
+<status status="PASS" start="2026-01-18T22:30:09.037265" elapsed="1.392024"/>
+</test>
+<test id="s1-s1-t7" name="Create Quiz Comment" line="106">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-01-18T22:30:10.429777" level="INFO">&amp;{headers} = { accept=application/json | Content-Type=application/json | Authorization=Bearer 7|o2CgAi7lEvHrFfvgcRIbGUz7xwPIT00GYgwixGZ8e1570797 }</msg>
+<var>&amp;{headers}</var>
+<arg>accept=application/json</arg>
+<arg>Content-Type=application/json</arg>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.429603" elapsed="0.000187"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-01-18T22:30:10.430032" level="INFO">&amp;{payload} = { content=Świetny quiz, polecam! | rating=5 }</msg>
+<var>&amp;{payload}</var>
+<arg>content=Świetny quiz, polecam!</arg>
+<arg>rating=5</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.429911" elapsed="0.000133"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-01-18T22:30:10.573009" level="INFO">POST Request : url=http://localhost:8000/api/quizzes/10/comments 
+ path_url=/api/quizzes/10/comments 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Authorization': 'Bearer 7|o2CgAi7lEvHrFfvgcRIbGUz7xwPIT00GYgwixGZ8e1570797', 'Content-Length': '57'} 
+ body=b'{"content": "\\u015awietny quiz, polecam!", "rating": "5"}' 
+ </msg>
+<msg time="2026-01-18T22:30:10.573077" level="INFO">POST Response : url=http://localhost:8000/api/quizzes/10/comments 
+ status=201, reason=Created 
+ headers={'Host': 'localhost:8000', 'Connection': 'close', 'X-Powered-By': 'PHP/8.2.29', 'Cache-Control': 'no-cache, private', 'Date': 'Sun, 18 Jan 2026 21:30:10 GMT', 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'http://localhost:5173'} 
+ body={"id":1,"quiz_id":"10","user_id":7,"user_name":"test","content":"\u015awietny quiz, polecam!","rating":"5","created_at":"2026-01-18T21:30:10.000000Z","updated_at":"2026-01-18T21:30:10.000000Z"} 
+ </msg>
+<msg time="2026-01-18T22:30:10.573159" level="INFO">${resp} = &lt;Response [201]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>/api/quizzes/${quiz_id}/comments</arg>
+<arg>headers=${headers}</arg>
+<arg>json=${payload}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.430153" elapsed="0.143017"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${resp.status_code} == 200 or ${resp.status_code} == 201</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.573368" elapsed="0.000594"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-01-18T22:30:10.574371" level="INFO">${data} = {'id': 1, 'quiz_id': '10', 'user_id': 7, 'user_name': 'test', 'content': 'Świetny quiz, polecam!', 'rating': '5', 'created_at': '2026-01-18T21:30:10.000000Z', 'updated_at': '2026-01-18T21:30:10.000000...</msg>
+<var>${data}</var>
+<arg>json.loads('''${resp.text}''')</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.574081" elapsed="0.000305"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>COMMENT CREATED: ${data}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.574510" elapsed="0.000237"/>
+</kw>
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<arg>${data}</arg>
+<arg>id</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.574854" elapsed="0.000083"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${data["content"]}</arg>
+<arg>Świetny quiz, polecam!</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.575057" elapsed="0.000292"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<arg>${data["rating"]}</arg>
+<arg>5</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.575475" elapsed="0.000285"/>
+</kw>
+<status status="PASS" start="2026-01-18T22:30:10.429452" elapsed="0.146523"/>
+</test>
+<test id="s1-s1-t8" name="Get Quiz Comments" line="126">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-01-18T22:30:10.576530" level="INFO">&amp;{headers} = { accept=application/json | Authorization=Bearer 7|o2CgAi7lEvHrFfvgcRIbGUz7xwPIT00GYgwixGZ8e1570797 }</msg>
+<var>&amp;{headers}</var>
+<arg>accept=application/json</arg>
+<arg>Authorization=Bearer ${token}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.576360" elapsed="0.000182"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2026-01-18T22:30:10.654162" level="INFO">GET Request : url=http://localhost:8000/api/quizzes/10/comments 
+ path_url=/api/quizzes/10/comments 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'accept': 'application/json', 'Connection': 'keep-alive', 'Authorization': 'Bearer 7|o2CgAi7lEvHrFfvgcRIbGUz7xwPIT00GYgwixGZ8e1570797'} 
+ body=None 
+ </msg>
+<msg time="2026-01-18T22:30:10.654222" level="INFO">GET Response : url=http://localhost:8000/api/quizzes/10/comments 
+ status=200, reason=OK 
+ headers={'Host': 'localhost:8000', 'Connection': 'close', 'X-Powered-By': 'PHP/8.2.29', 'Cache-Control': 'no-cache, private', 'Date': 'Sun, 18 Jan 2026 21:30:10 GMT', 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': 'http://localhost:5173'} 
+ body=[{"id":1,"quiz_id":10,"user_id":7,"user_name":"test","content":"\u015awietny quiz, polecam!","rating":5,"created_at":"2026-01-18T21:30:10.000000Z","updated_at":"2026-01-18T21:30:10.000000Z"}] 
+ </msg>
+<msg time="2026-01-18T22:30:10.654300" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>api</arg>
+<arg>/api/quizzes/${quiz_id}/comments</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.576627" elapsed="0.077684"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2026-01-18T22:30:10.654876" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${resp.status_code}</arg>
+<arg>200</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.654521" elapsed="0.000383"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-01-18T22:30:10.655401" level="INFO">${comments} = [{'id': 1, 'quiz_id': 10, 'user_id': 7, 'user_name': 'test', 'content': 'Świetny quiz, polecam!', 'rating': 5, 'created_at': '2026-01-18T21:30:10.000000Z', 'updated_at': '2026-01-18T21:30:10.000000Z'}...</msg>
+<var>${comments}</var>
+<arg>json.loads('''${resp.text}''')</arg>
+<arg>json</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.655040" elapsed="0.000377"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${c["id"]} | ${c["user_name"]} | ${c["rating"]} | ${c["content"]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.655651" elapsed="0.000613"/>
+</kw>
+<var name="${c}">{'id': 1, 'quiz_id': 10, 'user_id': 7, 'user_name': 'test', 'content': 'Świetny quiz, polecam!', 'rating': 5, 'created_at': '2026-01-18T21:30:10.000000Z', 'updated_at': '2026-01-18T21:30:10.000000Z'}</var>
+<status status="PASS" start="2026-01-18T22:30:10.655612" elapsed="0.000690"/>
+</iter>
+<var>${c}</var>
+<value>@{comments}</value>
+<status status="PASS" start="2026-01-18T22:30:10.655520" elapsed="0.000802"/>
+</for>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2026-01-18T22:30:10.656673" level="INFO">Length is 1.</msg>
+<msg time="2026-01-18T22:30:10.656732" level="INFO">${count} = 1</msg>
+<var>${count}</var>
+<arg>${comments}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.656445" elapsed="0.000298"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${count} &gt; 0</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2026-01-18T22:30:10.656879" elapsed="0.000171"/>
+</kw>
+<status status="PASS" start="2026-01-18T22:30:10.576182" elapsed="0.081083"/>
+</test>
+<status status="PASS" start="2026-01-18T22:30:06.708737" elapsed="3.948856"/>
+</suite>
+<status status="PASS" start="2026-01-18T22:30:06.689247" elapsed="3.968749"/>
+</suite>
+<statistics>
+<total>
+<stat pass="8" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Tests" id="s1" pass="8" fail="0" skip="0">Tests</stat>
+<stat name="Api" id="s1-s1" pass="8" fail="0" skip="0">Tests.Api</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

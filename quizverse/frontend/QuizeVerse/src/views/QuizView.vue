@@ -4,7 +4,7 @@
       <div class="quiz-header">
         <h1 class="quiz-title">{{ quiz.title }}</h1>
         <p class="quiz-meta" v-if="quiz.questions">
-          By User#{{ quiz.user_id }} • {{ quiz.questions.length }} Questions
+          By User#{{ quiz.user?.name }} • {{ quiz.questions.length }} Questions
         </p>
       </div>
 

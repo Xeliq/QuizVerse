@@ -15,6 +15,7 @@ html, body {
 .app-main {
   /* This should match or slightly exceed the navbar height (padding + logo) */
   padding-top: 72px;
+  min-height: calc(100vh - 100px);
 }
 
 /* Full-page centered layout */

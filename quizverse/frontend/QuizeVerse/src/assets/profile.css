@@ -7,6 +7,12 @@
   background-color: #ffffff;
 }
 
+.profile-container h1{
+  text-align: center;
+  margin-bottom: 40px;
+  color: #6e7592;
+}
+
 .profile-header {
   display: flex;
   gap: 30px;

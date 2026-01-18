@@ -1,7 +1,8 @@
 <template>
   <div class="profile-container">
+    <h1 class="about-title">Profile</h1>
     <section class="profile-header">
-      <img src="@/assets/logo.png" alt="User Avatar" class="profile-avatar" />
+      <img src="@/assets/tung_tung.jpg" alt="User Avatar" class="profile-avatar" />
 
       <div class="profile-stats">
         <div class="stat-box">

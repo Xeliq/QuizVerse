@@ -10,7 +10,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 6px 6px rgba(0,0,0,0.15);
 }
 
 .nav-left {
@@ -90,4 +90,140 @@
   background: #E5A000;
   border-color: #E5A000;
   color: white;
+}
+
+/* Burger Menu */
+.burger-menu {
+  display: none;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  gap: 5px;
+  padding: 12px 12px;
+}
+
+.burger-menu span {
+  width: 25px;
+  height: 3px;
+  background: white;
+  border-radius: 3px;
+  transition: 0.3s;
+}
+
+.burger-menu.active span:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 5px);
+}
+
+.burger-menu.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger-menu.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  display: none;
+  position: absolute;
+  top: 72px;
+  left: 0;
+  width: 100%;
+  background: #5a6178;
+  flex-direction: column;
+  padding: 20px;
+  gap: 15px;
+  max-height: calc(100vh - 72px);
+  overflow-y: auto;
+  z-index: 999;
+}
+
+.mobile-menu.active {
+  display: flex;
+}
+
+.mobile-nav-item {
+  color: white;
+  font-size: 1.1rem;
+  text-decoration: none;
+  padding: 10px;
+  transition: 0.25s;
+}
+
+.mobile-nav-item:hover {
+  color: #E5A000;
+  padding-left: 15px;
+}
+
+.mobile-auth {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  padding-top: 15px;
+}
+
+.mobile-auth-btn {
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: 0.25s;
+  text-align: center;
+  border: none;
+}
+
+.mobile-auth-btn.login-btn,
+.mobile-auth-btn.profile-btn {
+  background: white;
+  color: #6e7592;
+}
+
+.mobile-auth-btn.login-btn:active,
+.mobile-auth-btn.profile-btn:active {
+  background: #E5A000;
+  color: white;
+}
+
+.mobile-auth-btn.register-btn {
+  background: #E5A000;
+  color: white;
+}
+
+.mobile-auth-btn.register-btn:active {
+  transform: scale(0.98);
+}
+
+.mobile-auth-btn.logout-btn {
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+}
+
+.mobile-auth-btn.logout-btn:active {
+  background: #E5A000;
+  border-color: #E5A000;
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 12px 16px;
+  }
+
+  .nav-links,
+  .nav-auth {
+    display: none;
+  }
+
+  .burger-menu {
+    display: flex;
+  }
+
+  .logo {
+    height: 40px;
+  }
 }
