@@ -44,7 +44,7 @@
             class="nav-btn submit-btn"
             @click="submitResult"
           >
-            Zakończ i zapisz wynik
+            Submit Quiz
           </button>
         </div>
       </div>

@@ -36,14 +36,23 @@
       <div class="quiz-list">
         <div v-for="quiz in createdQuizzes" :key="quiz.id" class="quiz-item">
           <p>{{ quiz.title }}</p>
+          <br>
+            <button class="icon-button edit" @click="editQuiz(quiz.id)" title="Edit quiz">
+              ✏️
+            </button>&nbsp;
+
+            <button class="icon-button delete" @click="deleteQuiz(quiz.id)" title="Delete quiz">
+              🗑️
+            </button>
+          </div>
         </div>
-      </div>
     </section>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import api from '../axios'
 import '../assets/profile.css'
 
@@ -52,6 +61,14 @@ const percentile = ref(0)
 const points = ref(0)
 const completedQuizzes = ref([])
 const createdQuizzes = ref([])
+
+
+const route = useRoute()
+const router = useRouter()
+const token = localStorage.getItem('token')
+
+const quizId = route.params.id
+const isEditMode = !!quizId
 
 onMounted(async () => {
   try {
@@ -67,4 +84,37 @@ onMounted(async () => {
     console.error('Failed to load profile', e)
   }
 })
+
+
+const editQuiz = (quizId) => {
+  router.push(`/quizzes/${quizId}/edit`)
+}
+
+
+
+
+
+const deleteQuiz = async (quizId) => {
+  const confirmed = confirm('Do you want to delete this quiz?')
+  if (!confirmed) return
+
+  try {
+    await api.delete(`/quizzes/${quizId}`)
+
+
+    createdQuizzes.value = createdQuizzes.value.filter(
+      quiz => quiz.id !== quizId
+    )
+  } catch (error) {
+    console.error('Error deleting quiz', error)
+    alert('Failed to delete quiz')
+  }
+}
+
+
+
+
+
+
+
 </script>

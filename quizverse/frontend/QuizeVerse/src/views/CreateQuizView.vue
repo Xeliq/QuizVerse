@@ -2,14 +2,14 @@
   <div class="create-quiz-page">
     <div class="create-quiz-box">
       <h1 class="create-quiz-title">
-        Create a <span>Quiz</span>
+        {{ isEditMode ? 'Edit' : 'Create' }} a <span>Quiz</span>
       </h1>
 
       <form class="quiz-form" @submit.prevent="submitQuiz" >
         <div class="form-scroll">
           <!-- Quiz Title -->
           <label for="title">Title:</label>
-          <input id="title" v-model="quiz.title" name = "title" type="text" placeholder="Enter quiz title" />
+          <input id="title" v-model="quiz.title" name="title" type="text" placeholder="Enter quiz title" />
 
           <!-- Description -->
           <label for="description">Description:</label>
@@ -27,7 +27,7 @@
           <!-- Quiz Image -->
           <label for="quiz-image">Quiz Image (optional):</label>
           <input id="quiz-image" type="file" accept="image/*" @change="onQuizImageChange" />
-          <div v-if="quiz.image" class="image-preview">
+          <div v-if="quiz.image || quiz.imagePreview" class="image-preview">
             <img :src="quiz.imagePreview" alt="Quiz image preview" />
           </div>
 
@@ -99,7 +99,9 @@
         </div>
 
         <div class="button-row">
-          <button type="submit">Save Quiz</button>
+          <button type="submit">
+            {{ isEditMode ? 'Update Quiz' : 'Save Quiz' }}
+          </button>
         </div>
       </form>
     </div>
@@ -109,9 +111,16 @@
 <script setup>
 import '../assets/create-quiz.css'
 import { ref, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import api from '../axios'
 
 const token = localStorage.getItem('token')
+const route = useRoute()
+const router = useRouter()
+
+// 🔹 Tryb edycji
+const quizId = route.params.id
+const isEditMode = !!quizId
 
 const quiz = ref({
   title: '',
@@ -124,12 +133,13 @@ const quiz = ref({
 
 const categories = ref([])
 
+// ---------------------------
+// Fetch categories
+// ---------------------------
 async function fetchCategories() {
   try {
     const response = await api.get('/categories/select', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+      headers: { Authorization: `Bearer ${token}` }
     })
     const data = response.data
 
@@ -146,8 +156,47 @@ async function fetchCategories() {
   }
 }
 
-onMounted(() => {
-  fetchCategories()
+// ---------------------------
+// Fetch quiz for edit
+// ---------------------------
+async function fetchQuizForEdit() {
+  if (!isEditMode) return
+  try {
+    const response = await api.get(`/quizzes/${quizId}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    const data = response.data
+
+    quiz.value.title = data.title
+    quiz.value.description = data.description
+    quiz.value.category_id = data.category_id
+    quiz.value.image = null
+    quiz.value.imagePreview = data.image_path
+      ? `http://localhost:8000/storage/${data.image_path}`
+      : null
+
+    quiz.value.questions = data.questions.map(q => ({
+      text: q.text,
+      points: q.points,
+      image: null,
+      answers: q.answers.map(a => ({
+        text: a.text,
+        is_correct: a.is_correct,
+        image: null
+      }))
+    }))
+  } catch (e) {
+    console.error('Failed to load quiz', e)
+    alert('Nie udało się wczytać quizu')
+  }
+}
+
+// ---------------------------
+// onMounted
+// ---------------------------
+onMounted(async () => {
+  await fetchCategories()       // poczekaj na kategorie
+  await fetchQuizForEdit()      // dopiero potem wczytaj quiz w trybie edit
 
   const app = document.getElementById('app')
   if (app) {
@@ -159,13 +208,11 @@ onMounted(() => {
   }
 })
 
+// ---------------------------
+// Questions & Answers
+// ---------------------------
 function addQuestion() {
-  quiz.value.questions.push({
-    text: '',
-    points: 1,
-    image: null,
-    answers: []
-  })
+  quiz.value.questions.push({ text: '', points: 1, image: null, answers: [] })
 }
 
 function removeQuestion(index) {
@@ -173,11 +220,7 @@ function removeQuestion(index) {
 }
 
 function addAnswer(questionIndex) {
-  quiz.value.questions[questionIndex].answers.push({
-    text: '',
-    is_correct: false,
-    image: null
-  })
+  quiz.value.questions[questionIndex].answers.push({ text: '', is_correct: false, image: null })
 }
 
 function onFileChange(event, questionIndex) {
@@ -190,19 +233,19 @@ function onQuizImageChange(event) {
   if (file) {
     quiz.value.image = file
     const reader = new FileReader()
-    reader.onload = (e) => {
-      quiz.value.imagePreview = e.target.result
-    }
+    reader.onload = (e) => { quiz.value.imagePreview = e.target.result }
     reader.readAsDataURL(file)
   }
 }
 
+// ---------------------------
+// Submit quiz
+// ---------------------------
 async function submitQuiz(event) {
   event.preventDefault()
 
-  // Walidacja podstawowa
   if (!quiz.value.title || !quiz.value.category_id || quiz.value.questions.length === 0) {
-    alert('Fill up title, category and at least one question.')
+    alert('Wypełnij tytuł, kategorię i przynajmniej jedno pytanie.')
     return
   }
 
@@ -218,55 +261,34 @@ async function submitQuiz(event) {
   quiz.value.questions.forEach((question, qIndex) => {
     formData.append(`questions[${qIndex}][text]`, question.text)
     formData.append(`questions[${qIndex}][points]`, question.points)
-
-    if (question.image instanceof File) {
-      formData.append(`questions[${qIndex}][image]`, question.image)
-    }
+    if (question.image instanceof File) formData.append(`questions[${qIndex}][image]`, question.image)
 
     question.answers.forEach((answer, aIndex) => {
       formData.append(`questions[${qIndex}][answers][${aIndex}][text]`, answer.text)
       formData.append(`questions[${qIndex}][answers][${aIndex}][is_correct]`, answer.is_correct ? 'true' : 'false')
-
-      if (answer.image instanceof File) {
-        formData.append(`questions[${qIndex}][answers][${aIndex}][image]`, answer.image)
-      }
+      if (answer.image instanceof File) formData.append(`questions[${qIndex}][answers][${aIndex}][image]`, answer.image)
     })
   })
 
-  console.log("Question image:", formData)
+  // 🔹 PUT spoofing jeśli edycja
+  const url = isEditMode ? `/quizzes/${quizId}` : '/quizzes'
+  if (isEditMode) formData.append('_method', 'PUT')
+
   try {
-    const response = await api.post('/quizzes',formData, {
-      headers: {
-        'Content-Type': undefined,
-        'Authorization': `Bearer ${token}`
-      },
+    const response = await api.post(url, formData, {
+      headers: { Authorization: `Bearer ${token}` }
     })
 
-    if (response.status !== 200 && response.status !== 201) {
-      const errorData = response.data
-      console.error('Error saving:', errorData)
-      alert(errorData.message || 'Failed to save quiz.')
-      return
-    }
-
-    const result = response.data
-    console.log('Quiz saved:', result)
-    alert('Quiz saved successfully!')
-
-    // Reset formularza
-    quiz.value = {
-      title: '',
-      description: '',
-      category_id: '',
-      image: null,
-      imagePreview: null,
-      questions: []
+    if (isEditMode) {
+      alert('Quiz zaktualizowany pomyślnie!')
+      router.push('/profile')
+    } else {
+      alert('Quiz zapisany pomyślnie!')
+      quiz.value = { title: '', description: '', category_id: '', image: null, imagePreview: null, questions: [] }
     }
   } catch (error) {
-    console.error('Network error:', error)
-    alert('An error occurred.')
+    console.error('Błąd sieci:', error)
+    alert('Wystąpił błąd podczas zapisu quizu.')
   }
 }
 </script>
-
-
