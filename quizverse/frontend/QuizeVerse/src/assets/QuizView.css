@@ -170,5 +170,6 @@ html, body {
 .selected {
   background-color: #4caf50;
   color: white;
-  border: 2px solid #388e3c;
+  border: 6px solid #F5BA42
+;
 }
