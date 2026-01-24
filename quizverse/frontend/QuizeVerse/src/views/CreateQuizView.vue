@@ -276,7 +276,7 @@ async function submitQuiz(event) {
 
   try {
     const response = await api.post(url, formData, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { 'Content-Type': undefined, Authorization: `Bearer ${token}` }
     })
 
     if (isEditMode) {
