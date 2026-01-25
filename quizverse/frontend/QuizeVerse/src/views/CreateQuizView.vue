@@ -233,16 +233,11 @@ async function submitQuiz(event) {
 
   console.log("Question image:", formData)
   try {
-<<<<<<< HEAD
-    const response = await api.post(url, formData, {
-      headers: { 'Content-Type': undefined, Authorization: `Bearer ${token}` }
-=======
     const response = await api.post('/quizzes',formData, {
       headers: {
         'Content-Type': undefined,
         'Authorization': `Bearer ${token}`
       },
->>>>>>> parent of 7c9a44c (edytowanie quizu i usuwanie z panelu usera)
     })
 
     if (response.status !== 200 && response.status !== 201) {
