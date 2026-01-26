@@ -24,7 +24,7 @@
   stroke: luma(220),
   it
 )
-= QuizVerse API – Robot Framework Test Suite Documentation
+= QuizVerse API - Robot Framework Test Suite Documentation
 == Overview
 This Robot Framework suite validates core QuizVerse API flows using RequestsLibrary.
 It covers:
@@ -40,19 +40,19 @@ It covers:
 - The suite is designed as an end-to-end flow, where later tests reuse variables created earlier (token, quiz_id, comment_id, etc.).
 == Configuration
 === Libraries
-- RequestsLibrary – HTTP session management and requests
-- Collections – dictionary/list helpers
-- json – JSON parsing via Evaluate json.loads(...)
+- RequestsLibrary - HTTP session management and requests
+- Collections - dictionary/list helpers
+- json - JSON parsing via Evaluate json.loads(...)
 === Variables
 - `${BASE_URL}: http://localhost:8000`
 - `${EMAIL}: test@test.test`
 - `${PASSWORD}: testtest`
 === Shared Suite Variables Created During Execution
-- `${token}` – authentication token saved after login
-- `${quiz_id}` – ID of quiz created in Create New Quiz
-- `${comment_id}` – ID of comment created in Create Quiz Comment
-- `${question_id}` – ID of question created in Add Question To Created Quiz
-- `${answer_id}` – ID of answer created in Add Answer To Question
+- `${token}` - authentication token saved after login
+- `${quiz_id}` - ID of quiz created in Create New Quiz
+- `${comment_id}` - ID of comment created in Create Quiz Comment
+- `${question_id}` - ID of question created in Add Question To Created Quiz
+- `${answer_id}` - ID of answer created in Add Answer To Question
 == Execution Flow & Dependencies
 This suite is order-dependent:
 1. Login must run first to generate `${token}`
