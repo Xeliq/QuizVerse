@@ -1,5 +1,5 @@
 <template>
-  <div class="login-page">
+  <div class="login-page register-page">
     <div class="login-box">
       <h1 class="login-title">
         Register for <span class="quizverse-text">QuizVerse</span>

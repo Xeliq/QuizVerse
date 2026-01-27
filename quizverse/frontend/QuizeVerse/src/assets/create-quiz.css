@@ -135,7 +135,15 @@ button:disabled {
   background: linear-gradient(145deg, #f6b703, #e5a304);
   transform: translateY(-1px);
 }
-
+.answer-row {
+  margin: 4px;
+}
+.question-block {
+  margin-top: 24px;
+  border: 1px solid #000000;
+  padding: 10px;
+  border-radius: 10px;
+}
 /* Remove Question button */
 .question-block > button[type="button"] {
   background: linear-gradient(145deg, #d9534f, #b52b27);

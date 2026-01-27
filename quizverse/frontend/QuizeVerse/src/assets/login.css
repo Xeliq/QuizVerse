@@ -5,6 +5,11 @@
   align-items: center;
   width: 100%;
   height: 100%;
+  margin-top: max(0px, 50cqh - 300px);
+}
+
+.register-page {
+  margin-top: max(0px, 50cqh - 400px);
 }
 
 .login-box {

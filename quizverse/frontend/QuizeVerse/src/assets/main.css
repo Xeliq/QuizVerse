@@ -24,3 +24,17 @@ a,
 img {
   max-width: 100%;
 }
+.questions-section,
+.form-scroll label,
+.create-quiz-title,
+.why-list,
+.login-title {
+  color: black;
+}
+
+.quiz-comments,
+.quiz-info-meta,
+.quiz-info-title,
+span {
+  color: #E5A000;
+}

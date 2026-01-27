@@ -12,7 +12,7 @@ import Footer from '/src/views/Footer.vue'
 </script>
 
 <style>
-html, body, #app {
+html, body {
   height: 100%;
   margin: 0;
   display: flex;
