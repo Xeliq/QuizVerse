@@ -230,11 +230,11 @@ onMounted(() => {
 
   const app = document.getElementById('app')
   if (app) {
-    app.style.display = 'flex'
-    app.style.justifyContent = 'center'
-    app.style.alignItems = 'center'
-    app.style.height = '100vh'
-    app.style.width = '100vw'
+    // app.style.display = 'flex'
+    // app.style.justifyContent = 'center'
+    // app.style.alignItems = 'center'
+    // app.style.height = '100vh'
+    // app.style.width = '100vw'
   }
 })
 
