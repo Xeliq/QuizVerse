@@ -12,6 +12,7 @@ import PrivacyPolicy from '../views/PrivacyPolicy.vue'
 import ContactView from '@/views/ContactView.vue'
 import QuizzesView from '@/views/QuizzesView.vue'
 import ProfileView from '@/views/ProfileView.vue'
+import EditQuizView from '@/views/EditQuizView.vue'
 
 
 const router = createRouter({
@@ -59,8 +60,8 @@ const router = createRouter({
     },
     {
       path: '/quizzes/:id/edit',
-      name: 'EditQuiz',
-      component: CreateQuizView,
+      name: 'edit-quiz',
+      component: EditQuizView,
       meta: { requiresAuth: true }
     },
     {
