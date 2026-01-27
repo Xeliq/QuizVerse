@@ -21,7 +21,7 @@ html, body {
 
 /* Full-page centered layout */
 .quiz-page {
-  position: relative; 
+  /* position: relative;  */
   top: 0;
   left: 0;
   width: 100%;
@@ -66,7 +66,6 @@ html, body {
   background-color: #ffffff;
   padding: 40px;
   border-radius: 10px;
-  width: 700px; /* same width as create-quiz-box */
   max-width: 95%;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   text-align: left;
@@ -173,4 +172,10 @@ html, body {
   color: white;
   border: 6px solid #F5BA42
 ;
+}
+
+@media (min-width: 768px) {
+  .quiz-box{
+    width: 700px;
+  }
 }
