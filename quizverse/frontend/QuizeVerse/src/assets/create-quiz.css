@@ -1,36 +1,18 @@
-/* Full viewport background */
-html, body {
-  height: auto;
-  margin: 0;
-  padding: 0;
-  color: black;
-}
-
-/* Full-page centered layout */
-body {
-  background-color: #6e7592;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
 /* Quiz container */
 .create-quiz-page {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 20px;
 }
 
-/* Quiz box - responsive */
+/* Quiz box */
 .create-quiz-box {
   background-color: white;
   padding: 40px;
   border-radius: 10px;
-  max-width: 900px;
-  width: 100%;
+  width: 700px;
+  max-width: 95%;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   text-align: left;
   display: flex;
@@ -40,12 +22,12 @@ body {
 /* Title */
 .create-quiz-title {
   text-align: center;
-  font-size: 1.75rem;
+  font-size: 28px;
   font-weight: bold;
   margin-bottom: 30px;
 }
 
-.create-quiz-title span {
+.quizverse-text {
   color: #e5a304;
 }
 
@@ -56,7 +38,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  padding-right: 10px;
 }
 
 /* Inputs and textarea */
@@ -64,7 +45,6 @@ body {
   font-weight: 500;
   margin-top: 12px;
   margin-bottom: 6px;
-  display: block;
 }
 
 .quiz-form input[type="text"],
@@ -75,7 +55,7 @@ body {
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
-  font-size: 0.95rem;
+  font-size: 15px;
   background-color: #fafafa;
   transition: border 0.2s ease-in-out, background-color 0.2s;
   box-sizing: border-box;
@@ -94,79 +74,13 @@ body {
   background-color: #fff;
 }
 
-/* Image preview */
-.image-preview {
-  margin-top: 10px;
-  max-width: 100%;
-
-}
-
-.image-preview img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Questions section */
-.questions-section {
-  margin-top: 20px;
-}
-
-.questions-section h2 {
-  font-size: 1.4rem;
-  color: #333;
-  margin-bottom: 15px;
-}
-
-.question-block {
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  border: 1px solid #e0e0e0;
-}
-
-.question-block h3 {
-  font-size: 1.1rem;
-  margin-bottom: 10px;
-  color: #555;
-}
-
-/* Answers section */
-.answers-section {
-  margin-top: 15px;
-  padding-left: 10px;
-}
-
-.answer-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
-}
-
-.answer-row input[type="text"] {
-  flex: 1;
-  min-width: 200px;
-}
-
-.answer-row label {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin: 0;
-  white-space: nowrap;
-}
-
 /* Buttons */
 button {
   display: inline-block;
   background: linear-gradient(145deg, #2c2c2d, #3d3d3f);
   color: #fff;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 15px;
   padding: 12px 20px;
   border: none;
   border-radius: 8px;
@@ -198,22 +112,20 @@ button:disabled {
   justify-content: space-between;
   gap: 15px;
   margin-top: 30px;
-  flex-wrap: wrap;
-}
-
-.button-row button {
-  flex: 1;
-  min-width: 150px;
 }
 
 /* Add / Remove buttons */
+.questions-section {
+  padding-bottom: 10px;
+}
+
 .questions-section button,
 .answers-section button {
   background: linear-gradient(145deg, #e5a304, #c68a00);
   color: #fff;
   font-weight: 600;
   padding: 8px 14px;
-  font-size: 0.9rem;
+  font-size: 14px;
   border-radius: 6px;
   margin-top: 10px;
 }
@@ -227,7 +139,6 @@ button:disabled {
 /* Remove Question button */
 .question-block > button[type="button"] {
   background: linear-gradient(145deg, #d9534f, #b52b27);
-  margin-top: 15px;
 }
 
 .question-block > button[type="button"]:hover {
@@ -239,7 +150,6 @@ button:disabled {
   display: flex;
   gap: 30px;
   margin-top: 5px;
-  flex-wrap: wrap;
 }
 
 .switch {
@@ -258,10 +168,7 @@ button:disabled {
 .slider {
   position: absolute;
   cursor: pointer;
-  top: 0; 
-  left: 0; 
-  right: 0; 
-  bottom: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   background-color: #ccc;
   transition: 0.4s;
   border-radius: 24px;
@@ -287,83 +194,8 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
-/* ===================================
-   RESPONSIVE MEDIA QUERIES
-   =================================== */
-
-/* Tablet and below (768px) */
-@media (max-width: 768px) {
-  .create-quiz-box {
-    padding: 30px 20px;
-  }
-
-  .create-quiz-title {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-  }
-
-  .form-scroll {
-    max-height: none;
-    overflow-y: visible;
-  }
-
-  .question-block {
-    padding: 15px;
-  }
-
-  .answer-row {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .answer-row input[type="text"] {
-    min-width: 100%;
-  }
-
-  .button-row {
-    flex-direction: column;
-  }
-
-  .button-row button {
+@media (max-width: 767px) {
+  .app-main{
     width: 100%;
-  }
-
-  .quiz-form input[type="text"],
-  .quiz-form input[type="number"],
-  .quiz-form textarea,
-  .quiz-form select {
-    font-size: 1rem;
-  }
-}
-
-/* Mobile (480px and below) */
-@media (max-width: 480px) {
-  .create-quiz-page {
-    padding: 10px;
-  }
-
-  .create-quiz-box {
-    padding: 20px 15px;
-    border-radius: 8px;
-  }
-
-  .create-quiz-title {
-    font-size: 1.3rem;
-    margin-bottom: 15px;
-  }
-
-  .questions-section h2 {
-    font-size: 1.2rem;
-  }
-
-  button {
-    font-size: 0.9rem;
-    padding: 10px 16px;
-  }
-
-  .questions-section button,
-  .answers-section button {
-    font-size: 0.85rem;
-    padding: 8px 12px;
   }
 }
