@@ -1,4 +1,6 @@
 .footer {
+  position: fixed;
+  bottom: 0;
   width: 100%;
   background: #6e7592;
   color: white;
@@ -6,6 +8,10 @@
   left: 0;
   z-index: 100;
     box-shadow: 2px 0 6px 6px rgba(0,0,0,0.15);
+}
+
+body {
+  padding-bottom: 100px; 
 }
 
 .footer-content {
