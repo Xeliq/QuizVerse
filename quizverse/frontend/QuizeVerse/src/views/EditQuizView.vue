@@ -2,14 +2,14 @@
   <div class="create-quiz-page">
     <div class="create-quiz-box">
       <h1 class="create-quiz-title">
-        Create a <span>Quiz</span>
+        Edit the <span>Quiz</span>
       </h1>
 
       <form class="quiz-form" @submit.prevent="submitQuiz" >
         <div class="form-scroll">
           <!-- Quiz Title -->
           <label for="title">Title:</label>
-          <input id="title" v-model="quiz.title" name = "title" type="text" placeholder="Enter quiz title" />
+          <input id="title" v-model="quiz.title" name="title" type="text" placeholder="Enter quiz title" />
 
           <!-- Description -->
           <label for="description">Description:</label>
@@ -26,8 +26,8 @@
 
           <!-- Quiz Image -->
           <label for="quiz-image">Quiz Image (optional):</label>
-          <input id="quiz-image" type="file" accept="image/*" @change="onQuizImageChange" />
-          <div v-if="quiz.image" class="image-preview">
+          <input id="quiz-image" type="file" accept="image/*" ref="quizImageInput" @change="onQuizImageChange" />
+          <div v-if="quiz.imagePreview" class="image-preview">
             <img :src="quiz.imagePreview" alt="Quiz image preview" />
           </div>
 
@@ -111,6 +111,15 @@ import '../assets/create-quiz.css'
 import { ref, onMounted } from 'vue'
 import api from '../axios'
 
+import { useRoute, useRouter } from 'vue-router'
+
+const route = useRoute()
+const router = useRouter()
+const quizId = route.params.id
+
+const quizImageInput = ref(null)
+
+
 const token = localStorage.getItem('token')
 
 const quiz = ref({
@@ -127,9 +136,7 @@ const categories = ref([])
 async function fetchCategories() {
   try {
     const response = await api.get('/categories/select', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+      headers: { Authorization: `Bearer ${token}` }
     })
     const data = response.data
 
@@ -146,8 +153,78 @@ async function fetchCategories() {
   }
 }
 
+
+async function fetchQuizForEdit() {
+  try {
+    const response = await api.get(`/quizzes/${quizId}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+
+    const data = response.data
+
+    quiz.value = {
+      title: data.title,
+      description: data.description,
+      category_id: data.category_id,
+      image: null,
+      imagePreview: data.image_path
+        ? `${import.meta.env.VITE_API_URL}/storage/${data.image_path}`
+        : null,
+      questions: data.questions.map(q => ({
+        text: q.text,
+        points: q.points,
+        image: null,
+        imagePreview: q.image_path
+          ? `${import.meta.env.VITE_API_URL}/storage/${q.image_path}`
+          : null,
+        answers: q.answers.map(a => ({
+          text: a.text,
+          is_correct: a.is_correct,
+          image: null,
+          imagePreview: a.image_path
+            ? `${import.meta.env.VITE_API_URL}/storage/${a.image_path}`
+            : null,
+        }))
+      }))
+    }
+
+
+    if (quizImageInput.value) {
+        quizImageInput.value.value = null
+    }
+
+
+
+  } catch (error) {
+    console.error(error)
+    alert('Failed to load quiz')
+  }
+}
+
+
+function onQuizImageChange(event) {
+  const file = event.target.files[0]
+  if (file) {
+    quiz.value.image = file
+    quiz.value.imagePreview = URL.createObjectURL(file)
+  }
+}
+
+function onFileChange(event, qIndex) {
+  const file = event.target.files[0]
+  if (file) {
+    quiz.value.questions[qIndex].image = file
+    quiz.value.questions[qIndex].imagePreview = URL.createObjectURL(file)
+  }
+}
+
+
+
+
+
 onMounted(() => {
   fetchCategories()
+  fetchQuizForEdit()
 
   const app = document.getElementById('app')
   if (app) {
@@ -180,33 +257,16 @@ function addAnswer(questionIndex) {
   })
 }
 
-function onFileChange(event, questionIndex) {
-  const file = event.target.files[0]
-  if (file) quiz.value.questions[questionIndex].image = file
-}
 
-function onQuizImageChange(event) {
-  const file = event.target.files[0]
-  if (file) {
-    quiz.value.image = file
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      quiz.value.imagePreview = e.target.result
-    }
-    reader.readAsDataURL(file)
-  }
-}
 
-async function submitQuiz(event) {
-  event.preventDefault()
-
-  // Walidacja podstawowa
+async function submitQuiz() {
   if (!quiz.value.title || !quiz.value.category_id || quiz.value.questions.length === 0) {
     alert('Fill up title, category and at least one question.')
     return
   }
 
   const formData = new FormData()
+
   formData.append('title', quiz.value.title)
   formData.append('description', quiz.value.description)
   formData.append('category_id', quiz.value.category_id)
@@ -225,46 +285,46 @@ async function submitQuiz(event) {
 
     question.answers.forEach((answer, aIndex) => {
       formData.append(`questions[${qIndex}][answers][${aIndex}][text]`, answer.text)
-      formData.append(`questions[${qIndex}][answers][${aIndex}][is_correct]`, answer.is_correct ? 'true' : 'false')
+      formData.append(
+        `questions[${qIndex}][answers][${aIndex}][is_correct]`,
+        answer.is_correct ? 'true' : 'false'
+      )
 
       if (answer.image instanceof File) {
-        formData.append(`questions[${qIndex}][answers][${aIndex}][image]`, answer.image)
+        formData.append(
+          `questions[${qIndex}][answers][${aIndex}][image]`,
+          answer.image
+        )
       }
     })
   })
 
-  console.log("Question image:", formData)
   try {
-    const response = await api.post('/quizzes',formData, {
-      headers: {
-        'Content-Type': undefined,
-        'Authorization': `Bearer ${token}`
-      },
+    formData.append('_method', 'PUT') // REQUIRED for Laravel
+
+    await api.post(`/quizzes/${quizId}`, formData, {
+      headers: { Authorization: `Bearer ${token}` }
     })
 
-    if (response.status !== 200 && response.status !== 201) {
-      const errorData = response.data
-      console.error('Error saving:', errorData)
-      alert(errorData.message || 'Failed to save quiz.')
-      return
-    }
-
-    const result = response.data
-    console.log('Quiz saved:', result)
-    alert('Quiz saved successfully!')
-
-    // Reset formularza
-    quiz.value = {
-      title: '',
-      description: '',
-      category_id: '',
-      image: null,
-      imagePreview: null,
-      questions: []
-    }
+    alert('Quiz updated successfully')
+    router.push('/profile')
   } catch (error) {
-    console.error('Network error:', error)
-    alert('An error occurred.')
+  console.error('FULL ERROR:', error)
+
+  if (error.response) {
+    console.error('STATUS:', error.response.status)
+    console.error('DATA:', error.response.data)
+    alert(JSON.stringify(error.response.data, null, 2))
+  } else {
+    alert('Network / CORS error')
   }
 }
+
+}
+
+
+
+
 </script>
+
+
