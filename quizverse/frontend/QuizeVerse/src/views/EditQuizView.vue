@@ -60,6 +60,10 @@
               <label>Image (optional):</label>
               <input type="file" accept="image/*" @change="onFileChange($event, qIndex)" />
 
+              <div v-if="question.imagePreview" class="image-preview">
+                <img :src="question.imagePreview" alt="Question image preview" />
+              </div>
+
               <!-- Answers -->
               <div class="answers-section">
                 <h3>Answers</h3>
@@ -167,39 +171,37 @@ async function fetchQuizForEdit() {
       description: data.description,
       category_id: data.category_id,
       image: null,
-      imagePreview: data.image_path
-        ? `${import.meta.env.VITE_API_URL}/storage/${data.image_path}`
-        : null,
+
+
+      imagePreview: data.image_url ?? null,
+
       questions: data.questions.map(q => ({
         text: q.text,
         points: q.points,
         image: null,
-        imagePreview: q.image_path
-          ? `${import.meta.env.VITE_API_URL}/storage/${q.image_path}`
-          : null,
+
+        imagePreview: q.image_url ?? null,
+
         answers: q.answers.map(a => ({
           text: a.text,
           is_correct: a.is_correct,
           image: null,
-          imagePreview: a.image_path
-            ? `${import.meta.env.VITE_API_URL}/storage/${a.image_path}`
-            : null,
+
+          
+          imagePreview: a.image_url ?? null
         }))
       }))
     }
 
-
     if (quizImageInput.value) {
-        quizImageInput.value.value = null
+      quizImageInput.value.value = null
     }
-
-
-
   } catch (error) {
     console.error(error)
     alert('Failed to load quiz')
   }
 }
+
 
 
 function onQuizImageChange(event) {
@@ -300,10 +302,10 @@ async function submitQuiz() {
   })
 
   try {
-    formData.append('_method', 'PUT') // REQUIRED for Laravel
+    formData.append('_method', 'PUT')
 
     await api.post(`/quizzes/${quizId}`, formData, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: { 'Content-Type': undefined, Authorization: `Bearer ${token}` }
     })
 
     alert('Quiz updated successfully')
