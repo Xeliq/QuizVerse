@@ -13,6 +13,7 @@ import ContactView from '@/views/ContactView.vue'
 import QuizzesView from '@/views/QuizzesView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import EditQuizView from '@/views/EditQuizView.vue'
+import FeedbackView from '../views/FeedbackView.vue'
 
 
 const router = createRouter({
@@ -71,6 +72,13 @@ const router = createRouter({
       component: QuizPageView,
       meta: { requiresAuth: true }
     },
+    {
+  path: '/feedback/:id',
+  name: 'feedback',
+  component: FeedbackView,
+  meta: { requiresAuth: true }
+}
+,
     {
       path: '/quiz-result/:id',
       name: 'quiz-result',
