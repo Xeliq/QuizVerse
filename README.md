@@ -1,6 +1,6 @@
 # QuizVerse 🧠
 
-QuizVerse to pełnoprawna aplikacja webowa do tworzenia i rozwiązywania quizów. Projekt oparty jest na Laravel (backend), Vue.js (frontend) i PostgreSQL (baza danych), uruchamiany w kontenerach Docker.
+QuizVerse to profesjonalna aplikacja webowa do tworzenia i rozwiązywania quizów. Projekt oparty jest na Laravel (backend), Vue.js (frontend) i PostgreSQL (baza danych), uruchamiany w kontenerach Docker.
 
 
 ## 🧰 Stack technologiczny
